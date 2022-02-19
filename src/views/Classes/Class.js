@@ -1,0 +1,129 @@
+import {Button, Card, Col, Container, Form, FormControl, InputGroup, ListGroup, Row, Table} from "react-bootstrap";
+import React, {useEffect, useState} from "react";
+import {toast} from "react-toastify";
+import {api_get, api_put} from "../../utils/fetch";
+import {useParams, useNavigate} from "react-router-dom";
+import Loading from "../../components/Loading";
+import {LinkContainer} from "react-router-bootstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEdit, faExternalLink, faTrash} from "@fortawesome/free-solid-svg-icons";
+
+
+const Class = () => {
+
+    const { name } = useParams();
+    const navigate = useNavigate();
+    const [ class_, setClass ] = useState(undefined);
+    const [ subjects, setSubjects ] = useState(undefined);
+    const [ loadingClass, setLoadingClass ] = useState(true);
+    const [ loadingSubjects, setLoadingSubjects ] = useState(true);
+
+    document.title = `ELSYS Helper | ${name}`;
+
+    // GETTING THE CURRENT'S CLASS DETAILS
+    useEffect(() => {
+        api_get(`/classes/${name}`)
+            .then((response) => {setClass(response)})
+            .catch((error) => {
+                if (error.detail !== undefined) {
+                    toast.error(error.detail);
+                    navigate('/classes');
+                } else {
+                    toast.error(error.message);
+                }
+            })
+            .finally(() => {setLoadingClass(false)})
+
+        api_get(`/classes/${name}/subjects`)
+            .then((response) => {setSubjects(response)})
+            .catch((error) => {
+                if (error.detail !== undefined) {
+                    toast.error(error.detail);
+                } else {
+                    toast.error(error.message);
+                }
+            })
+            .finally(() => {setLoadingSubjects(false)})
+    }, [name, navigate])
+
+    return (
+        <>
+            <Container>
+                <Row>
+                    <Col lg={4}>
+
+                        {class_ === undefined ?
+                            <div className={'text-center'}>
+                                <Loading error={!loadingClass}/>
+                            </div>
+                            :
+                            <Card border={'primary'}>
+                                {/*<Card.Header>Featured</Card.Header>*/}
+                                <Card.Body>
+                                    <Card.Title>{class_.name}</Card.Title>
+                                    <Card.Text>
+                                        Класен ръководител - WIP
+                                    </Card.Text>
+                                </Card.Body>
+                                <ListGroup variant="flush">
+                                    <ListGroup.Item>Cras justo odio</ListGroup.Item>
+                                    <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
+                                    <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+                                </ListGroup>
+                                <Card.Body>
+                                    <Card.Link href="#">Copy Class Key Button - WIP</Card.Link>
+                                    <Card.Link href="#">Another Link</Card.Link>
+                                </Card.Body>
+                                <Card.Footer className="text-muted">Специалност - WIP</Card.Footer>
+                            </Card>
+                        }
+
+
+                    </Col>
+                    <Col lg={8}>
+                        <LinkContainer to={`subjects`}>
+                            <div className={'d-flex justify-content-end mb-3'}>
+                                <Button variant={'outline-primary'}>Задаване на Предмети</Button>
+                            </div>
+                        </LinkContainer>
+
+                        {subjects === undefined ?
+                            <div className={'text-center'}>
+                                <Loading error={!loadingSubjects}/>
+                            </div>
+                            :
+                            <Table striped bordered hover responsive className="mb-5">
+                                <thead>
+                                <tr>
+                                    <th>Клас</th>
+                                    <th>Учител</th>
+                                    <th>Действия</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {subjects.map((subject, index) => (
+                                    <tr key={index} className={'text-center'}>
+                                        <td>{subject.name}</td>
+                                        <td>WIP</td>
+                                        <td>
+                                            <LinkContainer to={`#`}>
+                                                <Button variant={"success"} className="m-1">
+                                                    <FontAwesomeIcon icon={faExternalLink} />
+                                                </Button>
+                                            </LinkContainer>
+                                        </td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </Table>
+                        }
+
+
+                    </Col>
+                </Row>
+            </Container>
+        </>
+    );
+};
+
+export default Class;
