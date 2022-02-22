@@ -59,10 +59,10 @@ const Class = () => {
     }, [name, navigate])
 
     const addSubject = (subject) => {
-        api_post(`/classes/${name}/subjects/add`,{"name": subject})
+        api_post(`/classes/${name}/subjects/add`,{"name": subject.name})
             .then(() => {
-                toast.success(`Предмет '${subject}' беше успешно добавен на Клас ${name}.`);
-                window.location.reload();
+                toast.success(`Предмет '${subject.name}' беше успешно добавен на Клас ${name}.`);
+                setClassSubjects([...classSubjects, subject]);
             })
             .catch((error) => {
                 if (error.detail !== undefined) {
@@ -74,10 +74,17 @@ const Class = () => {
     }
 
     const removeSubject = (subject) => {
-        api_delete(`/classes/${name}/subjects/remove`,{"name": subject})
+        api_delete(`/classes/${name}/subjects/remove`,{"name": subject.name})
             .then(() => {
-                toast.success(`Предмет '${subject}' беше успешно премахнат от Клас ${name}.`);
-                window.location.reload();
+                toast.success(`Предмет '${subject.name}' беше успешно премахнат от Клас ${name}.`);
+                const newClassSubjects = [...classSubjects];
+                classSubjects.map((classSubject, index) => {
+                    if (classSubject.name === subject.name) {
+                        newClassSubjects.splice(index, 1);
+                    }
+                })
+                setClassSubjects(newClassSubjects);
+                console.log(classSubjects)
             })
             .catch((error) => {
                 if (error.detail !== undefined) {
@@ -124,9 +131,9 @@ const Class = () => {
                                             <td>{subject.name}</td>
                                             <td>
                                                 {checkClassHasSubject(classSubjects, subject) === true ?
-                                                    <Button onClick={() => {removeSubject(subject.name)}} variant={"danger"}>Премахни</Button>
+                                                    <Button onClick={() => {removeSubject(subject)}} variant={"danger"}>Премахни</Button>
                                                     :
-                                                    <Button onClick={() => {addSubject(subject.name)}} variant={"success"}>Добави</Button>
+                                                    <Button onClick={() => {addSubject(subject)}} variant={"success"}>Добави</Button>
                                                 }
                                             </td>
                                         </tr>
