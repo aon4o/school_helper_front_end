@@ -5,7 +5,6 @@ import Login from './views/Login';
 import NoPage from "./views/NoPage";
 import Base from "./components/layout/Base";
 import Register from "./views/Register";
-import Test from "./views/Test";
 import Classes from "./views/Classes/Classes";
 import ClassCreate from "./views/Classes/ClassCreate";
 import ClassEdit from "./views/Classes/ClassEdit";
@@ -38,7 +37,6 @@ const App = () => {
                         <Route path=":name/edit" element={<SubjectEdit/>} />
                     </Route>
 
-                    <Route path="test" element={<Test />} />
                     <Route path="*" element={<NoPage />} />
                 </Route>
             </Routes>
