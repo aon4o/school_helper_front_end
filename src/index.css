@@ -15,9 +15,8 @@ body {
   background-color: var(--background) !important;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+footer {
+  background-color: var(--light-blue);
 }
 
 .small-component-margin {

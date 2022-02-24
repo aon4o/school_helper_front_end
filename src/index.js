@@ -8,6 +8,8 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 
+import './utils/navbarStickyAnimation';
+
 import App from './App';
 
 ReactDOM.render(

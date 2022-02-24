@@ -9,11 +9,12 @@ import Loading from "../../components/Loading";
 const Class = () => {
 
     const { name } = useParams();
+
     const navigate = useNavigate();
+
     const [ class_, setClass ] = useState(undefined);
     const [ classSubjects, setClassSubjects ] = useState(undefined);
     const [ otherSubjects, setOtherSubjects ] = useState(undefined);
-
     const [ loadingClassSubjects, setLoadingClassSubjects ] = useState(true);
     const [ loadingOtherSubjects, setLoadingOtherSubjects ] = useState(true);
 
@@ -107,9 +108,13 @@ const Class = () => {
             <Container>
                 <Row className={'justify-content-center'}>
                     <Col lg={6}>
-                        <h1 className="text-center mb-5">'{class_.name}' клас - Предмети</h1>
+                        <h1 className="text-center mb-5">'{name}' клас - Предмети</h1>
                     </Col>
                     <Col lg={10}>
+                        <div className={'d-flex justify-content-end mb-3'}>
+                            <Button variant={'outline-primary'} onClick={() => navigate(-1)}>Назад</Button>
+                        </div>
+
                         {classSubjects === undefined || otherSubjects === undefined ?
                             <div className={'text-center'}>
                                 <Loading error={!loadingClassSubjects + !loadingOtherSubjects}/>

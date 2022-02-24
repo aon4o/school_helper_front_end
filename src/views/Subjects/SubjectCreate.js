@@ -2,12 +2,14 @@ import {Button, Col, Container, Form, FormControl, InputGroup, Row} from "react-
 import React, {useState} from "react";
 import {toast} from "react-toastify";
 import {api_post} from "../../utils/fetch";
+import {useNavigate} from "react-router-dom";
 
 const SubjectCreate = () => {
 
     document.title = "ELSYS Helper | Нов Предмет";
 
     const [name, setName] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -40,6 +42,9 @@ const SubjectCreate = () => {
                             </InputGroup>
                         </Form>
 
+                        <div className={'d-flex justify-content-center'}>
+                            <Button variant={'outline-primary'} className={'me-2'} onClick={() => navigate(-1)}>Назад</Button>
+                        </div>
                     </Col>
                 </Row>
             </Container>

@@ -7,6 +7,8 @@ import Loading from "../../components/Loading";
 import {LinkContainer} from "react-router-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLink} from "@fortawesome/free-solid-svg-icons";
+import handleCopy from "../../utils/handleCopy";
+import {CopyToClipboard} from "react-copy-to-clipboard/src";
 
 
 const Class = () => {
@@ -71,8 +73,10 @@ const Class = () => {
                                     <ListGroup.Item>WIP</ListGroup.Item>
                                 </ListGroup>
                                 <Card.Body>
-                                    <Card.Link href="#">Copy Class Key Button - WIP</Card.Link>
-                                    <Card.Link href="#">Another Link</Card.Link>
+                                    Ключ за Discord -
+                                    <CopyToClipboard className={'ms-2'} text={class_.key} onCopy={(text, status) => handleCopy(text, status)}>
+                                        <Button variant={'outline-primary'}>Копиране</Button>
+                                    </CopyToClipboard>
                                 </Card.Body>
                                 <Card.Footer className="text-muted">Специалност - WIP</Card.Footer>
                             </Card>
@@ -81,11 +85,12 @@ const Class = () => {
 
                     </Col>
                     <Col lg={8}>
-                        <LinkContainer to={`subjects`}>
-                            <div className={'d-flex justify-content-end mb-3'}>
+                        <div className={'d-flex justify-content-end mb-3'}>
+                            <Button variant={'outline-primary'} className={'me-2'} onClick={() => navigate(-1)}>Назад</Button>
+                            <LinkContainer to={`subjects`}>
                                 <Button variant={'outline-primary'}>Задаване на Предмети</Button>
-                            </div>
-                        </LinkContainer>
+                            </LinkContainer>
+                        </div>
 
                         {subjects === undefined ?
                             <div className={'text-center'}>
