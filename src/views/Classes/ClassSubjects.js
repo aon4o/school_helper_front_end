@@ -1,12 +1,9 @@
-import {Button, Card, Col, Container, Form, FormControl, InputGroup, ListGroup, Row, Table} from "react-bootstrap";
+import {Button, Col, Container, Row, Table} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
-import {api_delete, api_get, api_post, api_put} from "../../utils/fetch";
+import {api_delete, api_get, api_post} from "../../utils/fetch";
 import {useParams, useNavigate} from "react-router-dom";
 import Loading from "../../components/Loading";
-import {LinkContainer} from "react-router-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faExternalLink, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 
 const Class = () => {
@@ -59,9 +56,9 @@ const Class = () => {
     }, [name, navigate])
 
     const addSubject = (subject) => {
-        api_post(`/classes/${name}/subjects/add`,{"name": subject.name})
+        api_post(`/classes/${class_.name}/subjects/add`,{"name": subject.name})
             .then(() => {
-                toast.success(`Предмет '${subject.name}' беше успешно добавен на Клас ${name}.`);
+                toast.success(`Предмет '${subject.name}' беше успешно добавен на Клас ${class_.name}.`);
                 setClassSubjects([...classSubjects, subject]);
             })
             .catch((error) => {
@@ -74,9 +71,9 @@ const Class = () => {
     }
 
     const removeSubject = (subject) => {
-        api_delete(`/classes/${name}/subjects/remove`,{"name": subject.name})
+        api_delete(`/classes/${class_.name}/subjects/remove`,{"name": subject.name})
             .then(() => {
-                toast.success(`Предмет '${subject.name}' беше успешно премахнат от Клас ${name}.`);
+                toast.success(`Предмет '${subject.name}' беше успешно премахнат от Клас ${class_.name}.`);
                 const newClassSubjects = [...classSubjects];
                 classSubjects.map((classSubject, index) => {
                     if (classSubject.name === subject.name) {
@@ -110,7 +107,7 @@ const Class = () => {
             <Container>
                 <Row className={'justify-content-center'}>
                     <Col lg={6}>
-                        <h1 className="text-center mb-5">'{name}' клас - Предмети</h1>
+                        <h1 className="text-center mb-5">'{class_.name}' клас - Предмети</h1>
                     </Col>
                     <Col lg={10}>
                         {classSubjects === undefined || otherSubjects === undefined ?

@@ -11,7 +11,7 @@ const ClassEdit = () => {
 
     document.title = `ELSYS Helper | ${name} | Настройки`;
 
-    const [new_name, setNewName] = useState(name);
+    const [new_name, setNewName] = useState(name.toString);
 
     const handleSubmit = (event) => {
         event.preventDefault();

@@ -1,12 +1,12 @@
-import {Button, Card, Col, Container, Form, FormControl, InputGroup, ListGroup, Row, Table} from "react-bootstrap";
+import {Button, Card, Col, Container, ListGroup, Row, Table} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
-import {api_get, api_put} from "../../utils/fetch";
+import {api_get} from "../../utils/fetch";
 import {useParams, useNavigate} from "react-router-dom";
 import Loading from "../../components/Loading";
 import {LinkContainer} from "react-router-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faExternalLink, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faExternalLink} from "@fortawesome/free-solid-svg-icons";
 
 
 const Class = () => {
@@ -66,9 +66,9 @@ const Class = () => {
                                     </Card.Text>
                                 </Card.Body>
                                 <ListGroup variant="flush">
-                                    <ListGroup.Item>Cras justo odio</ListGroup.Item>
-                                    <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                                    <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+                                    <ListGroup.Item>WIP</ListGroup.Item>
+                                    <ListGroup.Item>WIP in</ListGroup.Item>
+                                    <ListGroup.Item>WIP</ListGroup.Item>
                                 </ListGroup>
                                 <Card.Body>
                                     <Card.Link href="#">Copy Class Key Button - WIP</Card.Link>
