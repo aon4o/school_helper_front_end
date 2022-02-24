@@ -1,4 +1,4 @@
-import {Button, Col, Container, Row, Spinner, Table} from "react-bootstrap";
+import {Button, Col, Container, Row, Table} from "react-bootstrap";
 import {api_delete, api_get} from "../../utils/fetch";
 import {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -6,6 +6,8 @@ import {faTrash, faEdit, faExternalLink} from "@fortawesome/free-solid-svg-icons
 import {toast} from "react-toastify";
 import {LinkContainer} from 'react-router-bootstrap';
 import Loading from "../../components/Loading";
+import {CopyToClipboard} from "react-copy-to-clipboard/src";
+import handleCopy from "../../utils/handleCopy";
 
 
 const Classes = () => {
@@ -71,8 +73,14 @@ const Classes = () => {
                                 {classes.map((class_, index) => (
                                         <tr key={index} className="text-center">
                                             <td>{class_.name}</td>
-                                            <td>WIP</td>
-                                            <td>{class_.key}</td>
+                                            <td>
+                                                WIP
+                                            </td>
+                                            <td>
+                                                <CopyToClipboard text={class_.key} onCopy={(text, status) => handleCopy(text, status)}>
+                                                    <Button variant={'outline-primary'}>Копиране на Ключа</Button>
+                                                </CopyToClipboard>
+                                            </td>
                                             <td>
                                                 <LinkContainer to={`${class_.name}`}>
                                                     <Button variant={"success"} className="m-1">
