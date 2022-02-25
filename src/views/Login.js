@@ -2,15 +2,18 @@ import Cookies from "js-cookie";
 import {useState} from "react";
 import {api_post} from "../utils/fetch";
 import {useNavigate} from "react-router-dom";
+import {Button, Col, FloatingLabel, Form, Row} from "react-bootstrap";
 
 const Login = () => {
+    document.title = "ELSYS Helper | LogIn";
+
     const navigate = useNavigate();
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        api_post('/login', {'username': username, 'password': password})
+        api_post('/login', {'email': email, 'password': password})
             .then((response) => {
                 console.log(response);
                 Cookies.set("token", response.access_token);
@@ -22,29 +25,27 @@ const Login = () => {
     };
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                <div>Login</div>
-                <br />
-                <label>Username:</label>
-                <input
-                    type="text"
-                    className="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <br />
-                <br />
-                <label>Password: </label>
-                <input
-                    type="password"
-                    className="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <br />
-                <br />
-                <div><input type="submit" value="Submit" /></div>
-            </form>
+            <Row className="d-flex justify-content-center">
+                <Col md={5}>
+                    <h1 className="text-center mb-4">Вход</h1>
+                    <Form onSubmit={handleSubmit} className="border border-3 border-primary rounded-3 p-3">
+                        <FloatingLabel controlId="floatingInput" label="Имейл" className="mb-3">
+                            <Form.Control id="inputEmail" className="border-primary" type={'email'} placeholder="name@example.com" value={email}
+                                          onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </FloatingLabel>
+
+                        <FloatingLabel controlId="floatingPassword" label="Парола" className="mb-3">
+                            <Form.Control type="password" className="border-primary" placeholder="Password" value={password}
+                                          onChange={(e) => setPassword(e.target.value)} />
+                        </FloatingLabel>
+
+                        <Button variant="primary" type="submit">
+                            Влизане
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
         </>
     );
 };
