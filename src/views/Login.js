@@ -1,28 +1,65 @@
-import {Form, Button, Row, Col, FloatingLabel} from 'react-bootstrap';
+import Cookies from "js-cookie";
+import {useContext, useState} from "react";
+import {api_post} from "../utils/fetch";
 
 const Login = () => {
-    document.title = "ELSYS Helper | LogIn";
-
+    useContext(AuthApi);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const news = async () => {
+            return await api_post('/login', {'username': username, 'password': password})
+                .then((response) => {
+                    console.log(response);
+                    Cookies.set("token", response.access_token);
+                    return response;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        };
+        let x = await news();
+        if (x) {
+            window.location.reload();
+        }
+    };
     return (
         <>
-            <Row className="d-flex justify-content-center">
-                <Col md={5}>
-                    <h1 className="text-center mb-4">LogIn Form</h1>
-                    <Form className="border border-3 border-primary rounded-3 p-3">
-                        <FloatingLabel controlId="floatingInput" label="Email address" className="mb-3">
-                            <Form.Control id="inputEmail" className="border-primary" type="email" placeholder="name@example.com" />
-                        </FloatingLabel>
-
-                        <FloatingLabel controlId="floatingPassword" label="Password" className="mb-3">
-                            <Form.Control type="password" className="border-primary" placeholder="Password" />
-                        </FloatingLabel>
-
-                        <Button variant="primary" type="submit">
-                            LogIn
-                        </Button>
-                    </Form>
-                </Col>
-            </Row>
+            <form
+                style={{
+                    marginTop: "100px",
+                    marginLeft: "50px",
+                    border: "solid 1px",
+                    width: "max-content",
+                    borderColor: "green",
+                }}
+                onSubmit={handleSubmit}
+            >
+                <div style={{ textAlign: "center" }}>Login</div>
+                <br />
+                <label>Username:</label>
+                <input
+                    type="text"
+                    className="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+                <br />
+                <br />
+                <label>Password: </label>
+                <input
+                    type="password"
+                    className="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <br />
+                <br />
+                <div style={{ textAlign: "center" }}>
+                    <input type="submit" value="Submit" />
+                </div>
+            </form>
         </>
     );
 };
