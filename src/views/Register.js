@@ -4,7 +4,7 @@ import {Button, Col, FloatingLabel, Form, Row} from "react-bootstrap";
 
 
 function Register() {
-    document.title = "ELSYS Helper | Register";
+    document.title = "ELSYS Helper | Регистрация";
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");

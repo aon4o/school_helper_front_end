@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {Button, Col, FloatingLabel, Form, Row} from "react-bootstrap";
 
 const Login = () => {
-    document.title = "ELSYS Helper | LogIn";
+    document.title = "ELSYS Helper | Вход";
 
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
