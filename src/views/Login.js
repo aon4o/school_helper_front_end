@@ -1,42 +1,29 @@
 import Cookies from "js-cookie";
-import {useContext, useState} from "react";
+import {useState} from "react";
 import {api_post} from "../utils/fetch";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
-    useContext(AuthApi);
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const news = async () => {
-            return await api_post('/login', {'username': username, 'password': password})
-                .then((response) => {
-                    console.log(response);
-                    Cookies.set("token", response.access_token);
-                    return response;
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        };
-        let x = await news();
-        if (x) {
-            window.location.reload();
-        }
+
+        api_post('/login', {'username': username, 'password': password})
+            .then((response) => {
+                console.log(response);
+                Cookies.set("token", response.access_token);
+                navigate('/');
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
     return (
         <>
-            <form
-                style={{
-                    marginTop: "100px",
-                    marginLeft: "50px",
-                    border: "solid 1px",
-                    width: "max-content",
-                    borderColor: "green",
-                }}
-                onSubmit={handleSubmit}
-            >
-                <div style={{ textAlign: "center" }}>Login</div>
+            <form onSubmit={handleSubmit}>
+                <div>Login</div>
                 <br />
                 <label>Username:</label>
                 <input
@@ -56,9 +43,7 @@ const Login = () => {
                 />
                 <br />
                 <br />
-                <div style={{ textAlign: "center" }}>
-                    <input type="submit" value="Submit" />
-                </div>
+                <div><input type="submit" value="Submit" /></div>
             </form>
         </>
     );
