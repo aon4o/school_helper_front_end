@@ -1,5 +1,5 @@
-import {BrowserRouter, Routes, Route, useNavigate} from "react-router-dom";
-import {createContext, useContext, useEffect, useState} from "react";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {useContext, useEffect, useState} from "react";
 import Cookies from "js-cookie";
 
 // import Home from './views/Home';
@@ -18,69 +18,56 @@ import SubjectEdit from "./views/Subjects/SubjectEdit";
 import ClassSubjects from "./views/Classes/ClassSubjects";
 import {api_post} from "./utils/fetch";
 
-const AuthApi = createContext(undefined);
-const TokenApi = createContext(undefined);
-
-
-
+import authContext from "./utils/authContext";
 
 const App = () => {
-
-    const Auth = useContext(AuthApi);
-
     const [auth, setAuth] = useState(false);
     const [token, setToken] = useState("");
 
-    const readCookie = () => {
+    useEffect(() => {
         let token = Cookies.get("token");
         if (token) {
             setAuth(true);
             setToken(token);
         }
-    };
-
-    useEffect(() => {
-        readCookie();
     }, []);
 
     return (
-        <AuthApi.Provider value={{ auth, setAuth }}>
-            <TokenApi.Provider value={{ token, setToken }}>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<Base />}>
-                            {/*<Route index element={<Home />} />*/}
-                            {/*<Route path="login" element={<Login />} />*/}
-                            {/*<Route path="register" element={<Register />} />*/}
-                            <Route path="classes">
-                                <Route index element={<Classes />}/>
-                                <Route path="create" element={<ClassCreate />} />
-                                <Route path=":name" element={<Class />}/>
-                                <Route path=":name/edit" element={<ClassEdit/>} />
-                                <Route path=":name/subjects" element={<ClassSubjects/>} />
-                            </Route>
-                            <Route path="subjects">
-                                <Route index element={<Subjects />}/>
-                                <Route path="create" element={<SubjectCreate />} />
-                                <Route path=":name" element={<Subject />}/>
-                                <Route path=":name/edit" element={<SubjectEdit/>} />
-                            </Route>
-
-                            <Route path="/register" element={<Register />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/" element={<Home />} />
-
-                            <Route path="*" element={<NoPage />} />
+        <authContext.Provider value={{ auth, setAuth, token, setToken }}>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Base />}>
+                        {/*<Route index element={<Home />} />*/}
+                        {/*<Route path="login" element={<Login />} />*/}
+                        {/*<Route path="register" element={<Register />} />*/}
+                        <Route path="classes">
+                            <Route index element={<Classes />}/>
+                            <Route path="create" element={<ClassCreate />} />
+                            <Route path=":name" element={<Class />}/>
+                            <Route path=":name/edit" element={<ClassEdit/>} />
+                            <Route path=":name/subjects" element={<ClassSubjects/>} />
                         </Route>
-                    </Routes>
-                </BrowserRouter>
-            </TokenApi.Provider>
-        </AuthApi.Provider>
+                        <Route path="subjects">
+                            <Route index element={<Subjects />}/>
+                            <Route path="create" element={<SubjectCreate />} />
+                            <Route path=":name" element={<Subject />}/>
+                            <Route path=":name/edit" element={<SubjectEdit/>} />
+                        </Route>
+
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/" element={<Home />} />
+
+                        <Route path="*" element={<NoPage />} />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </authContext.Provider>
     );
-}
+};
 
 const Login = () => {
-    useContext(AuthApi);
+    useContext(authContext);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const handleSubmit = async (event) => {
@@ -201,41 +188,38 @@ function Register() {
 
 const Home = () => {
     let [data, setData] = useState("");
-    const Auth = useContext(AuthApi);
-    const Token = useContext(TokenApi);
+    const Auth = useContext(authContext);
 
     const handleClick = () => {
         Auth.setAuth(false);
         Cookies.remove("token");
     };
 
-    let token = Token.token;
-    const headers = {
-        Authorization: `Bearer ${token}`,
-    };
+    let token = Auth.token;
 
-    const getData = async () => {
-        return await fetch("http://127.0.0.1:8000/", {headers})
+
+    useEffect(() => {
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        };
+
+        let x = fetch("http://127.0.0.1:8000/", {headers})
             .then(async (response) => {
                 const data = await response.json();
                 console.log(data)
-                return data.data;
+                setData(data.data);
             })
             .catch(error => {
                 console.log(error);
             });
-    };
-    useEffect(async () => {
-        let x = await getData();
-        setData(x);
         console.log(x);
-    }, [getData]);
+    }, [token]);
     return (
         <>
             <h2>Home</h2>
-            {Auth ?
+            {Auth.auth ?
                 <button onClick={handleClick}>Logout</button>
-            :
+                :
                 <span>asd</span>
             }
             <h1>{data}</h1>
