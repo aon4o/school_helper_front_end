@@ -4,6 +4,7 @@ import {toast} from "react-toastify";
 import {api_get, api_put} from "../../utils/fetch";
 import {useParams, useNavigate} from "react-router";
 import authContext from "../../utils/authContext";
+import handleFetchError from "../../utils/handleFetchError";
 
 const SubjectEdit = () => {
 
@@ -29,13 +30,7 @@ const SubjectEdit = () => {
                 toast.success(`Името на Предмет "${name}" беше променено на "${new_name}" успешно!`);
                 navigate(`/subjects/${new_name}/edit`);
             })
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                } else {
-                    toast.error(error.message);
-                }
-            });
+            .catch((error) => {handleFetchError(error)});
     }
 
     // CHECKS IF THE CLASS TO BE EDITED EXISTS

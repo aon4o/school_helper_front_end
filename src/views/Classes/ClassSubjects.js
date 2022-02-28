@@ -5,6 +5,7 @@ import {api_delete, api_get, api_post} from "../../utils/fetch";
 import {useParams, useNavigate} from "react-router";
 import Loading from "../../components/Loading";
 import authContext from "../../utils/authContext";
+import handleFetchError from "../../utils/handleFetchError";
 
 
 const Class = () => {
@@ -30,52 +31,26 @@ const Class = () => {
 
         api_get(`/classes/${name}`, Auth.token)
             .then((response) => {setClass(response)})
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                    navigate('/classes');
-                } else {
-                    toast.error(error.message);
-                }
-            })
+            .catch((error) => {handleFetchError(error, () => navigate('/classes'));})
 
         api_get(`/classes/${name}/subjects`, Auth.token)
             .then((response) => {setClassSubjects(response)})
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                } else {
-                    toast.error(error.message);
-                }
-            })
+            .catch((error) => {handleFetchError(error)})
             .finally(() => {setLoadingClassSubjects(false)})
 
         api_get(`/subjects`, Auth.token)
             .then((response) => {setOtherSubjects(response)})
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                } else {
-                    toast.error(error.message);
-                }
-            })
+            .catch((error) => {handleFetchError(error)})
             .finally(() => {setLoadingOtherSubjects(false)})
     }, [Auth.auth, Auth.token, name, navigate])
 
     const addSubject = (subject) => {
-        console.log(Auth.token)
         api_post(`/classes/${class_.name}/subjects/add`,{"name": subject.name}, Auth.token)
             .then(() => {
                 toast.success(`Предмет '${subject.name}' беше успешно добавен на Клас ${class_.name}.`);
                 setClassSubjects([...classSubjects, subject]);
             })
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                } else {
-                    toast.error(error.message);
-                }
-            })
+            .catch((error) => {handleFetchError(error)})
     }
 
     const removeSubject = (subject) => {
@@ -91,13 +66,7 @@ const Class = () => {
                 setClassSubjects(newClassSubjects);
                 console.log(classSubjects)
             })
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                } else {
-                    toast.error(error.message);
-                }
-            })
+            .catch((error) => {handleFetchError(error)})
     }
 
     const checkClassHasSubject = (subjects, subject) => {

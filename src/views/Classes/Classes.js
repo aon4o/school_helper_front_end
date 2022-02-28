@@ -10,6 +10,7 @@ import {CopyToClipboard} from "react-copy-to-clipboard/src";
 import handleCopy from "../../utils/handleCopy";
 import authContext from "../../utils/authContext";
 import {useNavigate} from "react-router";
+import handleFetchError from "../../utils/handleFetchError";
 
 
 const Classes = () => {
@@ -29,13 +30,7 @@ const Classes = () => {
 
         api_get("/classes", Auth.token)
             .then(response => setClasses(response))
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                } else {
-                    toast.error(error.message);
-                }
-            })
+            .catch((error) => {handleFetchError(error)})
             .finally(() => setLoading(false));
     }, [Auth.auth, Auth.token, navigate])
 
@@ -47,10 +42,7 @@ const Classes = () => {
                 new_list.splice(index, 1);
                 setClasses(new_list);
             })
-            .catch((e) => {
-                console.log(e);
-                toast.error(e.detail);
-            })
+            .catch((error) => {handleFetchError(error)})
     }
 
     return (

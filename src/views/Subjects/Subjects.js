@@ -8,6 +8,7 @@ import {LinkContainer} from 'react-router-bootstrap';
 import Loading from "../../components/Loading";
 import {useNavigate} from "react-router";
 import authContext from "../../utils/authContext";
+import handleFetchError from "../../utils/handleFetchError";
 
 
 const Subjects = () => {
@@ -29,11 +30,7 @@ const Subjects = () => {
         api_get("/subjects", Auth.token)
             .then(response => setSubjects(response))
             .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                } else {
-                    toast.error(error.message);
-                }
+                handleFetchError(error);
             })
             .finally(() => setLoading(false));
     }, [Auth.auth, Auth.token, navigate])
@@ -47,10 +44,7 @@ const Subjects = () => {
                 new_list.splice(index, 1);
                 setSubjects(new_list);
             })
-            .catch((e) => {
-                console.log(e);
-                toast.error(e.detail);
-            })
+            .catch((error) => {handleFetchError(error)})
     }
 
     return (

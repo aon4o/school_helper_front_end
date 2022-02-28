@@ -2,8 +2,9 @@ import {Card, Col, Container, ListGroup, Row, Table} from "react-bootstrap";
 import React, {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {api_get} from "../../utils/fetch";
-import {useParams, useNavigate} from "react-router-dom";
+import {useParams, useNavigate} from "react-router";
 import authContext from "../../utils/authContext";
+import handleFetchError from "../../utils/handleFetchError";
 
 
 const Subject = () => {
@@ -26,18 +27,9 @@ const Subject = () => {
         api_get(`/subjects/${name}`, Auth.token)
             .then((response) =>
             {
-                console.log(typeof setSubject)
-                console.log(response);
                 setSubject(response);
             })
-            .catch((error) => {
-            if (error.detail !== undefined) {
-                toast.error(error.detail);
-                navigate('/subjects');
-            } else {
-                toast.error(error.message);
-            }
-        })
+            .catch((error) => {handleFetchError(error, () => navigate('/subjects'));})
     }, [Auth.auth, Auth.token, name, navigate, setSubject])
 
     return (

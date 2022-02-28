@@ -3,6 +3,7 @@ import {api_post} from "../utils/fetch";
 import {Button, Col, FloatingLabel, Form, Row} from "react-bootstrap";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router";
+import handleFetchError from "../utils/handleFetchError";
 
 function Register() {
     document.title = "ELSYS Helper | Регистрация";
@@ -29,13 +30,7 @@ function Register() {
                 toast.success('Регистрацията Ви бе успешна!');
                 navigate('/login')
             })
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                } else {
-                    toast.error(error.message);
-                }
-            });
+            .catch((error) => {handleFetchError(error)});
     };
 
     return (

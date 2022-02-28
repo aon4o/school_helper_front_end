@@ -2,8 +2,9 @@ import {Button, Col, Container, Form, FormControl, InputGroup, Row} from "react-
 import React, {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {api_get, api_put} from "../../utils/fetch";
-import {useParams, useNavigate} from "react-router-dom";
+import {useParams, useNavigate} from "react-router";
 import authContext from "../../utils/authContext";
+import handleFetchError from "../../utils/handleFetchError";
 
 const ClassEdit = () => {
 
@@ -22,14 +23,8 @@ const ClassEdit = () => {
         }
 
         // CHECKS IF THE CLASS TO BE EDITED EXISTS
-        api_get(`/classes/${name}`, Auth.token).catch((error) => {
-            if (error.detail !== undefined) {
-                toast.error(error.detail);
-                navigate('/classes');
-            } else {
-                toast.error(error.message);
-            }
-        })
+        api_get(`/classes/${name}`, Auth.token)
+            .catch((error) => {handleFetchError(error, () => navigate('/classes'))})
     })
 
     const handleSubmit = (event) => {

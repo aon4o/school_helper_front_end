@@ -4,6 +4,7 @@ import {toast} from "react-toastify";
 import {api_post} from "../../utils/fetch";
 import {useNavigate} from "react-router";
 import authContext from "../../utils/authContext";
+import handleFetchError from "../../utils/handleFetchError";
 
 const ClassCreate = () => {
 
@@ -24,13 +25,7 @@ const ClassCreate = () => {
         event.preventDefault();
         api_post("/classes/create", {"name": name}, Auth.token)
             .then(() => {toast.success("Клас '"+name+"' беше добавен успешно!");})
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                } else {
-                    toast.error(error.message);
-                }
-            });
+            .catch((error) => {handleFetchError(error)});
     }
 
     return (

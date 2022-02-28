@@ -2,8 +2,9 @@ import {Button, Col, Container, Form, FormControl, InputGroup, Row} from "react-
 import React, {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {api_post} from "../../utils/fetch";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 import authContext from "../../utils/authContext";
+import handleFetchError from "../../utils/handleFetchError";
 
 const SubjectCreate = () => {
 
@@ -24,13 +25,7 @@ const SubjectCreate = () => {
         event.preventDefault();
         api_post("/subjects/create", {"name": name}, Auth.token)
             .then(() => {toast.success("Предмет '"+name+"' беше добавен успешно!");})
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                } else {
-                    toast.error(error.message);
-                }
-            });
+            .catch((error) => {handleFetchError(error);});
     }
 
     return (

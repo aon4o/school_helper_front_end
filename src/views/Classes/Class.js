@@ -10,6 +10,7 @@ import {faExternalLink} from "@fortawesome/free-solid-svg-icons";
 import handleCopy from "../../utils/handleCopy";
 import {CopyToClipboard} from "react-copy-to-clipboard/src";
 import authContext from "../../utils/authContext";
+import handleFetchError from "../../utils/handleFetchError";
 
 
 const Class = () => {
@@ -34,25 +35,12 @@ const Class = () => {
 
         api_get(`/classes/${name}`, Auth.token)
             .then((response) => {setClass(response)})
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                    navigate('/classes');
-                } else {
-                    toast.error(error.message);
-                }
-            })
+            .catch((error) => {handleFetchError(error, () => navigate('/classes'))})
             .finally(() => {setLoadingClass(false)})
 
         api_get(`/classes/${name}/subjects`, Auth.token)
             .then((response) => {setSubjects(response)})
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                } else {
-                    toast.error(error.message);
-                }
-            })
+            .catch((error) => {handleFetchError(error)})
             .finally(() => {setLoadingSubjects(false)})
     }, [Auth.auth, Auth.token, name, navigate])
 

@@ -1,35 +1,31 @@
 import {useContext, useEffect, useState} from "react";
 import Cookies from "js-cookie";
 import authContext from "../utils/authContext";
+import {api_get} from "../utils/fetch";
+import {useNavigate} from "react-router";
+import handleFetchError from "../utils/handleFetchError";
 
 const Home = () => {
     let [data, setData] = useState("");
     const Auth = useContext(authContext);
+    const navigate = useNavigate();
 
     const handleClick = () => {
         Auth.setAuth(false);
         Cookies.remove("token");
     };
 
-    let token = Auth.token;
-
 
     useEffect(() => {
-        const headers = {
-            Authorization: `Bearer ${token}`,
-        };
-
-        let x = fetch("http://127.0.0.1:8000/", {headers})
-            .then(async (response) => {
-                const data = await response.json();
-                console.log(data)
-                setData(data.data);
+        let x = api_get("http://127.0.0.1:8000/test", Auth.token)
+            .then((response) => {
+                setData(response.data);
             })
             .catch(error => {
-                console.log(error);
+                handleFetchError(error);
             });
         console.log(x);
-    }, [token]);
+    }, [Auth.token, navigate]);
     return (
         <>
             <h2>Home</h2>

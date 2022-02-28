@@ -1,10 +1,11 @@
 import Cookies from "js-cookie";
 import {useContext, useEffect, useState} from "react";
 import {api_post} from "../utils/fetch";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 import {Button, Col, FloatingLabel, Form, Row} from "react-bootstrap";
 import authContext from "../utils/authContext";
 import {toast} from "react-toastify";
+import handleFetchError from "../utils/handleFetchError";
 
 const Login = () => {
     document.title = "ELSYS Helper | Вход";
@@ -32,13 +33,7 @@ const Login = () => {
                 toast.success("Успешно влизане!")
                 navigate('/');
             })
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                } else {
-                    toast.error(error.message);
-                }
-            });
+            .catch((error) => {handleFetchError(error)});
     };
 
     return (
