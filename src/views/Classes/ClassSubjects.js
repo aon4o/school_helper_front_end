@@ -1,16 +1,17 @@
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {api_delete, api_get, api_post} from "../../utils/fetch";
-import {useParams, useNavigate} from "react-router-dom";
+import {useParams, useNavigate} from "react-router";
 import Loading from "../../components/Loading";
+import authContext from "../../utils/authContext";
 
 
 const Class = () => {
 
     const { name } = useParams();
-
     const navigate = useNavigate();
+    const Auth = useContext(authContext);
 
     const [ class_, setClass ] = useState(undefined);
     const [ classSubjects, setClassSubjects ] = useState(undefined);
@@ -22,7 +23,12 @@ const Class = () => {
 
     // GETTING THE CURRENT'S CLASS DETAILS
     useEffect(() => {
-        api_get(`/classes/${name}`)
+        if (!Auth.auth) {
+            toast.error('За да достъпите тази страница трябва да влезете в Профила си!');
+            navigate('/login');
+        }
+
+        api_get(`/classes/${name}`, Auth.token)
             .then((response) => {setClass(response)})
             .catch((error) => {
                 if (error.detail !== undefined) {
@@ -33,7 +39,7 @@ const Class = () => {
                 }
             })
 
-        api_get(`/classes/${name}/subjects`)
+        api_get(`/classes/${name}/subjects`, Auth.token)
             .then((response) => {setClassSubjects(response)})
             .catch((error) => {
                 if (error.detail !== undefined) {
@@ -44,7 +50,7 @@ const Class = () => {
             })
             .finally(() => {setLoadingClassSubjects(false)})
 
-        api_get(`/subjects`)
+        api_get(`/subjects`, Auth.token)
             .then((response) => {setOtherSubjects(response)})
             .catch((error) => {
                 if (error.detail !== undefined) {
@@ -54,10 +60,11 @@ const Class = () => {
                 }
             })
             .finally(() => {setLoadingOtherSubjects(false)})
-    }, [name, navigate])
+    }, [Auth.auth, Auth.token, name, navigate])
 
     const addSubject = (subject) => {
-        api_post(`/classes/${class_.name}/subjects/add`,{"name": subject.name})
+        console.log(Auth.token)
+        api_post(`/classes/${class_.name}/subjects/add`,{"name": subject.name}, Auth.token)
             .then(() => {
                 toast.success(`Предмет '${subject.name}' беше успешно добавен на Клас ${class_.name}.`);
                 setClassSubjects([...classSubjects, subject]);
@@ -72,7 +79,7 @@ const Class = () => {
     }
 
     const removeSubject = (subject) => {
-        api_delete(`/classes/${class_.name}/subjects/remove`,{"name": subject.name})
+        api_delete(`/classes/${class_.name}/subjects/remove`,{"name": subject.name}, Auth.token)
             .then(() => {
                 toast.success(`Предмет '${subject.name}' беше успешно премахнат от Клас ${class_.name}.`);
                 const newClassSubjects = [...classSubjects];

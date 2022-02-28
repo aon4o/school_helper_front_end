@@ -1,6 +1,6 @@
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
 import {api_delete, api_get} from "../../utils/fetch";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash, faEdit, faExternalLink} from "@fortawesome/free-solid-svg-icons";
 import {toast} from "react-toastify";
@@ -8,6 +8,8 @@ import {LinkContainer} from 'react-router-bootstrap';
 import Loading from "../../components/Loading";
 import {CopyToClipboard} from "react-copy-to-clipboard/src";
 import handleCopy from "../../utils/handleCopy";
+import authContext from "../../utils/authContext";
+import {useNavigate} from "react-router";
 
 
 const Classes = () => {
@@ -16,9 +18,16 @@ const Classes = () => {
 
     const [classes, setClasses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const Auth = useContext(authContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        api_get("/classes")
+        if (!Auth.auth) {
+            toast.error('За да достъпите тази страница трябва да влезете в Профила си!');
+            navigate('/login');
+        }
+
+        api_get("/classes", Auth.token)
             .then(response => setClasses(response))
             .catch((error) => {
                 if (error.detail !== undefined) {
@@ -28,10 +37,10 @@ const Classes = () => {
                 }
             })
             .finally(() => setLoading(false));
-    }, [])
+    }, [Auth.auth, Auth.token, navigate])
 
     const deleteClass = (name, index) => {
-        api_delete("/classes/" + name + "/delete")
+        api_delete("/classes/" + name + "/delete", null, Auth.token)
             .then(() => {
                 toast.success("Класът '"+ name +"' беше успешно изтрит.")
                 const new_list = [...classes];
@@ -52,7 +61,9 @@ const Classes = () => {
                         <h1 className="text-center mb-4">Класове</h1>
 
                         <div className="d-flex justify-content-end mb-3">
-                            <Button href="/classes/create" variant="outline-primary">Добави Клас</Button>
+                            <LinkContainer to={"/classes/create"}>
+                                <Button variant="outline-primary">Добави Клас</Button>
+                            </LinkContainer>
                         </div>
 
                         { classes.length === 0 ?

@@ -1,28 +1,46 @@
 import Cookies from "js-cookie";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {api_post} from "../utils/fetch";
 import {useNavigate} from "react-router-dom";
 import {Button, Col, FloatingLabel, Form, Row} from "react-bootstrap";
+import authContext from "../utils/authContext";
+import {toast} from "react-toastify";
 
 const Login = () => {
     document.title = "ELSYS Helper | Вход";
 
+    const Auth = useContext(authContext);
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        if (Auth.auth) {
+            toast.info('Вече сте влезнали в профил!');
+            navigate('/');
+        }
+    });
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         api_post('/login', {'email': email, 'password': password})
             .then((response) => {
-                console.log(response);
                 Cookies.set("token", response.access_token);
+                Auth.setToken(response.access_token);
+                Auth.setAuth(true);
+                toast.success("Успешно влизане!")
                 navigate('/');
             })
             .catch((error) => {
-                console.log(error);
+                if (error.detail !== undefined) {
+                    toast.error(error.detail);
+                } else {
+                    toast.error(error.message);
+                }
             });
     };
+
     return (
         <>
             <Row className="d-flex justify-content-center">

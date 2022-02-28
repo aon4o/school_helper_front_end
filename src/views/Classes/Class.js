@@ -1,30 +1,38 @@
 import {Button, Card, Col, Container, ListGroup, Row, Table} from "react-bootstrap";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {api_get} from "../../utils/fetch";
-import {useParams, useNavigate} from "react-router-dom";
+import {useParams, useNavigate} from "react-router";
 import Loading from "../../components/Loading";
 import {LinkContainer} from "react-router-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLink} from "@fortawesome/free-solid-svg-icons";
 import handleCopy from "../../utils/handleCopy";
 import {CopyToClipboard} from "react-copy-to-clipboard/src";
+import authContext from "../../utils/authContext";
 
 
 const Class = () => {
 
     const { name } = useParams();
-    const navigate = useNavigate();
     const [ class_, setClass ] = useState(undefined);
     const [ subjects, setSubjects ] = useState(undefined);
     const [ loadingClass, setLoadingClass ] = useState(true);
     const [ loadingSubjects, setLoadingSubjects ] = useState(true);
 
+    const navigate = useNavigate();
+    const Auth = useContext(authContext);
+
     document.title = `ELSYS Helper | ${name}`;
 
     // GETTING THE CURRENT'S CLASS DETAILS
     useEffect(() => {
-        api_get(`/classes/${name}`)
+        if (!Auth.auth) {
+            toast.error('За да достъпите тази страница трябва да влезете в Профила си!');
+            navigate('/login');
+        }
+
+        api_get(`/classes/${name}`, Auth.token)
             .then((response) => {setClass(response)})
             .catch((error) => {
                 if (error.detail !== undefined) {
@@ -36,7 +44,7 @@ const Class = () => {
             })
             .finally(() => {setLoadingClass(false)})
 
-        api_get(`/classes/${name}/subjects`)
+        api_get(`/classes/${name}/subjects`, Auth.token)
             .then((response) => {setSubjects(response)})
             .catch((error) => {
                 if (error.detail !== undefined) {
@@ -46,7 +54,7 @@ const Class = () => {
                 }
             })
             .finally(() => {setLoadingSubjects(false)})
-    }, [name, navigate])
+    }, [Auth.auth, Auth.token, name, navigate])
 
     return (
         <>

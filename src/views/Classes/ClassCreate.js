@@ -1,20 +1,28 @@
 import {Button, Col, Container, Form, FormControl, InputGroup, Row} from "react-bootstrap";
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {api_post} from "../../utils/fetch";
-import {LinkContainer} from "react-router-bootstrap";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
+import authContext from "../../utils/authContext";
 
 const ClassCreate = () => {
 
     document.title = "ELSYS Helper | Нов Клас";
 
     const [name, setName] = useState("");
+    const Auth = useContext(authContext);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!Auth.auth) {
+            toast.error('За да достъпите тази страница трябва да влезете в Профила си!');
+            navigate('/login');
+        }
+    }, [Auth.auth, navigate])
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        api_post("/classes/create", {"name": name})
+        api_post("/classes/create", {"name": name}, Auth.token)
             .then(() => {toast.success("Клас '"+name+"' беше добавен успешно!");})
             .catch((error) => {
                 if (error.detail !== undefined) {

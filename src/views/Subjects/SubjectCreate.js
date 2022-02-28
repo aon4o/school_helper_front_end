@@ -1,8 +1,9 @@
 import {Button, Col, Container, Form, FormControl, InputGroup, Row} from "react-bootstrap";
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {api_post} from "../../utils/fetch";
 import {useNavigate} from "react-router-dom";
+import authContext from "../../utils/authContext";
 
 const SubjectCreate = () => {
 
@@ -10,10 +11,18 @@ const SubjectCreate = () => {
 
     const [name, setName] = useState("");
     const navigate = useNavigate();
+    const Auth = useContext(authContext);
+
+    useEffect(() => {
+        if (!Auth.auth) {
+            toast.error('За да достъпите тази страница трябва да влезете в Профила си!');
+            navigate('/login');
+        }
+    }, [Auth.auth, navigate])
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        api_post("/subjects/create", {"name": name})
+        api_post("/subjects/create", {"name": name}, Auth.token)
             .then(() => {toast.success("Предмет '"+name+"' беше добавен успешно!");})
             .catch((error) => {
                 if (error.detail !== undefined) {

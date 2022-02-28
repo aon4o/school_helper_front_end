@@ -2,8 +2,23 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import {LinkContainer} from 'react-router-bootstrap'
+import {useContext} from "react";
+import authContext from "../../utils/authContext";
+import Cookies from "js-cookie";
+import {useNavigate} from "react-router";
+import {toast} from "react-toastify";
 
 const NavBar = () => {
+    const Auth = useContext(authContext);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        Auth.setAuth(false);
+        Cookies.remove("token");
+        toast.success('Успешно излезнахте от Профила си!')
+        navigate('/');
+    };
+
     return (
         <>
             <Navbar id={'navbar'} expand="lg" variant={"dark"}>
@@ -16,25 +31,39 @@ const NavBar = () => {
 
                     <Navbar.Collapse id="basic-navbar-nav" className={"d-flex justify-content-end"}>
                         <Nav className="align-self-end">
-                            <LinkContainer to="/classes">
-                                <Nav.Link>Класове</Nav.Link>
-                            </LinkContainer>
-                            <LinkContainer to="/subjects">
-                                <Nav.Link>Предмети</Nav.Link>
-                            </LinkContainer>
-                            <LinkContainer to="#">
-                                <Nav.Link>Discord Bot</Nav.Link>
-                            </LinkContainer>
-                            <LinkContainer to="#">
-                                <Nav.Link>Инструкции</Nav.Link>
-                            </LinkContainer>
 
-                            <LinkContainer to="/login" className={'ms-5'}>
-                                <Nav.Link>Вход</Nav.Link>
-                            </LinkContainer>
-                            <LinkContainer to="/register">
-                                <Nav.Link>Регистрация</Nav.Link>
-                            </LinkContainer>
+
+                            {Auth.auth ?
+                                <>
+                                    <LinkContainer to="/classes">
+                                        <Nav.Link>Класове</Nav.Link>
+                                    </LinkContainer>
+                                    <LinkContainer to="/subjects">
+                                        <Nav.Link>Предмети</Nav.Link>
+                                    </LinkContainer>
+                                    <LinkContainer to="#">
+                                        <Nav.Link>Discord Bot</Nav.Link>
+                                    </LinkContainer>
+                                    <LinkContainer to="#">
+                                        <Nav.Link>Инструкции</Nav.Link>
+                                    </LinkContainer>
+
+                                    <LinkContainer to="/users/me" className={'ms-5'}>
+                                        <Nav.Link>Профил</Nav.Link>
+                                    </LinkContainer>
+                                    <Nav.Link onClick={() => handleLogout()}>Изход</Nav.Link>
+                                </>
+                                :
+                                <>
+                                    <LinkContainer to="/login" className={'ms-5'}>
+                                        <Nav.Link>Вход</Nav.Link>
+                                    </LinkContainer>
+                                    <LinkContainer to="/register">
+                                        <Nav.Link>Регистрация</Nav.Link>
+                                    </LinkContainer>
+                                </>
+                            }
+
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
