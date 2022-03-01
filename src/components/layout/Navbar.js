@@ -2,19 +2,39 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import {LinkContainer} from 'react-router-bootstrap'
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import authContext from "../../utils/authContext";
 import Cookies from "js-cookie";
 import {useNavigate} from "react-router";
 import {toast} from "react-toastify";
+import getUserScope from "../../utils/getUserScope";
 
 const NavBar = () => {
     const Auth = useContext(authContext);
     const navigate = useNavigate();
+    const [ userVerified, setUserVerified ] = useState(false);
+
+    useEffect(() => {
+        getUserScope(Auth.token)
+            .then(scope => {
+                switch (scope) {
+                    case 'admin':
+                    case 'user':
+                        setUserVerified(true);
+                        break;
+                    default:
+                        setUserVerified(false);
+                        break;
+                }
+            })
+    }, [Auth.token])
 
     const handleLogout = () => {
         Auth.setAuth(false);
+        Auth.setToken('');
+        Auth.setScope(undefined);
         Cookies.remove("token");
+        setUserVerified(false);
         toast.success('Успешно излезнахте от Профила си!')
         navigate('/');
     };
@@ -32,8 +52,7 @@ const NavBar = () => {
                     <Navbar.Collapse id="basic-navbar-nav" className={"d-flex justify-content-end"}>
                         <Nav className="align-self-end">
 
-
-                            {Auth.auth ?
+                            {userVerified ?
                                 <>
                                     <LinkContainer to="/classes">
                                         <Nav.Link>Класове</Nav.Link>
@@ -41,13 +60,22 @@ const NavBar = () => {
                                     <LinkContainer to="/subjects">
                                         <Nav.Link>Предмети</Nav.Link>
                                     </LinkContainer>
-                                    <LinkContainer to="#">
+                                    <LinkContainer to="/users">
+                                        <Nav.Link>Потребители</Nav.Link>
+                                    </LinkContainer>
+                                    <LinkContainer to="/discord" className={'ms-5'}>
                                         <Nav.Link>Discord Bot</Nav.Link>
                                     </LinkContainer>
-                                    <LinkContainer to="#">
+                                    <LinkContainer to="/instructions">
                                         <Nav.Link>Инструкции</Nav.Link>
                                     </LinkContainer>
+                                </>
+                                :
+                                <></>
+                            }
 
+                            {Auth.auth ?
+                                <>
                                     <LinkContainer to="/users/me" className={'ms-5'}>
                                         <Nav.Link>Профил</Nav.Link>
                                     </LinkContainer>

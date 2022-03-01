@@ -1,40 +1,45 @@
 import {useContext, useEffect, useState} from "react";
-import Cookies from "js-cookie";
 import authContext from "../utils/authContext";
-import {api_get} from "../utils/fetch";
-import {useNavigate} from "react-router";
-import handleFetchError from "../utils/handleFetchError";
+import {Col, Container, Row} from "react-bootstrap";
 
 const Home = () => {
-    let [data, setData] = useState("");
+
+    document.title = "ELSYS Helper | Начало";
+
+    let [scopeMessage, setScopeMessage] = useState("Зареждане...");
     const Auth = useContext(authContext);
-    const navigate = useNavigate();
-
-    const handleClick = () => {
-        Auth.setAuth(false);
-        Cookies.remove("token");
-    };
-
 
     useEffect(() => {
-        let x = api_get("http://127.0.0.1:8000/test", Auth.token)
-            .then((response) => {
-                setData(response.data);
-            })
-            .catch(error => {
-                handleFetchError(error);
-            });
-        console.log(x);
-    }, [Auth.token, navigate]);
+        console.log(Auth.scope)
+        switch (Auth.scope) {
+            case 'admin':
+                setScopeMessage('Вие сте Админ.');
+                break;
+            case 'user':
+                setScopeMessage('Вие сте Потребител.');
+                break;
+            case '':
+                setScopeMessage('Профилът Ви не е потвърден! Свържете се с Админ за да поправи това.');
+                break;
+            default:
+                setScopeMessage('Не сте влезнали в Профила си!');
+                break;
+        }
+    }, [Auth.scope, Auth.token]);
     return (
         <>
-            <h2>Home</h2>
-            {Auth.auth ?
-                <button onClick={handleClick}>Logout</button>
-                :
-                <span>asd</span>
-            }
-            <h1>{data}</h1>
+            <Container>
+                <Row>
+                    <Col className={'text-center'}>
+                        <h1>ELSYS Helper | Начало</h1>
+                        <hr className={'my-5'}/>
+                        <h4>За преглед на Класове, Предмети и Профили може да ползвате Навигацията отгоре.</h4>
+                        <h4>За повече информация може да отидете на съответната страница.</h4>
+                        <hr className={'my-5'}/>
+                        <h3>{scopeMessage}</h3>
+                    </Col>
+                </Row>
+            </Container>
         </>
     );
 };

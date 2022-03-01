@@ -6,6 +6,7 @@ import {Button, Col, FloatingLabel, Form, Row} from "react-bootstrap";
 import authContext from "../utils/authContext";
 import {toast} from "react-toastify";
 import handleFetchError from "../utils/handleFetchError";
+import getUserScope from "../utils/getUserScope";
 
 const Login = () => {
     document.title = "ELSYS Helper | Вход";
@@ -30,6 +31,7 @@ const Login = () => {
                 Cookies.set("token", response.access_token);
                 Auth.setToken(response.access_token);
                 Auth.setAuth(true);
+                getUserScope(response.access_token).then(scope => {Auth.setScope(scope)});
                 toast.success("Успешно влизане!")
                 navigate('/');
             })
@@ -42,13 +44,13 @@ const Login = () => {
                 <Col md={5}>
                     <h1 className="text-center mb-4">Вход</h1>
                     <Form onSubmit={handleSubmit} className="border border-3 border-primary rounded-3 p-3">
-                        <FloatingLabel controlId="floatingInput" label="Имейл" className="mb-3">
+                        <FloatingLabel label="Имейл" className="mb-3">
                             <Form.Control id="inputEmail" className="border-primary" type={'email'} placeholder="name@example.com" value={email}
                                           onChange={(e) => setEmail(e.target.value)}
                             />
                         </FloatingLabel>
 
-                        <FloatingLabel controlId="floatingPassword" label="Парола" className="mb-3">
+                        <FloatingLabel label="Парола" className="mb-3">
                             <Form.Control type="password" className="border-primary" placeholder="Password" value={password}
                                           onChange={(e) => setPassword(e.target.value)} />
                         </FloatingLabel>
