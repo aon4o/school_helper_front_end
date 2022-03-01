@@ -6,8 +6,8 @@ import {faGithub, faInstagram, faLinkedin} from "@fortawesome/free-brands-svg-ic
 
 const Footer = () => {
     return (
-        <footer className="mt-auto">
-            <Container className="d-flex flex-wrap justify-content-between align-items-center py-3 mt-4">
+        <footer>
+            <Container className="d-flex flex-wrap justify-content-between align-items-center py-3">
                 <div className="col-md-4 d-flex align-items-center">
                     <a className="mb-3 me-3 mb-md-0 text-muted lh-1" href={"https://github.com/aon2003"}>
                         <FontAwesomeIcon icon={faGithub} />

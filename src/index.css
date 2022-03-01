@@ -17,6 +17,9 @@ body {
 
 footer {
   background-color: var(--light-blue);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 .small-component-margin {
