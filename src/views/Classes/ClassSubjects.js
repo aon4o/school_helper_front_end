@@ -92,9 +92,7 @@ const Class = () => {
                         </div>
 
                         {classSubjects === undefined || otherSubjects === undefined ?
-                            <div className={'text-center'}>
-                                <Loading error={!loadingClassSubjects + !loadingOtherSubjects}/>
-                            </div>
+                            <Loading error={!loadingClassSubjects + !loadingOtherSubjects}/>
                             :
                             <Table striped bordered hover responsive className="mb-5">
                                 <thead>

@@ -51,9 +51,7 @@ const Class = () => {
                     <Col lg={4}>
 
                         {class_ === undefined ?
-                            <div className={'text-center'}>
-                                <Loading error={!loadingClass}/>
-                            </div>
+                            <Loading error={!loadingClass}/>
                             :
                             <Card border={'primary'}>
                                 {/*<Card.Header>Featured</Card.Header>*/}
@@ -89,9 +87,7 @@ const Class = () => {
                         </div>
 
                         {subjects === undefined ?
-                            <div className={'text-center'}>
-                                <Loading error={!loadingSubjects}/>
-                            </div>
+                            <Loading error={!loadingSubjects}/>
                             :
                             <Table striped bordered hover responsive className="mb-5">
                                 <thead>

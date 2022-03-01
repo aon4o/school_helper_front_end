@@ -61,9 +61,7 @@ const Subjects = () => {
                         </div>
 
                         { subjects.length === 0 ?
-                            <div className={'text-center'}>
-                                <Loading error={!loading}/>
-                            </div>
+                            <Loading error={!loading}/>
                             :
                             <Table striped bordered hover responsive className="mb-5">
                                 <thead>
