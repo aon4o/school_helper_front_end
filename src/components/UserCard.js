@@ -9,7 +9,7 @@ const UserCard = (props) => {
 
     return (
         <>
-            <Card border={'primary'}>
+            <Card bg={'primary'} text={'white'} border={'primary'}>
                 <Card.Header>
                     {user.verified ?
                         <>{' '}<Badge pill bg={'primary'}>Потребител</Badge></>
@@ -25,14 +25,14 @@ const UserCard = (props) => {
                     <Card.Text>
                         Класен ръководител на{' '}
                         <LinkContainer to={'/asd'}>
-                            <Button size={'sm'} variant={'outline-primary'}>Клас</Button>
+                            <Button size={'sm'} variant={'primary'}>Клас</Button>
                         </LinkContainer>
                     </Card.Text>
                 </Card.Body>
                 <Card.Footer>
                     Имейл:{' '}
                     <CopyToClipboard text={user.email} onCopy={(event => handleCopy(user.email, event))}>
-                        <Button variant={'outline-primary'} size={'sm'}>{user.email}</Button>
+                        <Button variant={'primary'} size={'sm'}>{user.email}</Button>
                     </CopyToClipboard>
                 </Card.Footer>
             </Card>

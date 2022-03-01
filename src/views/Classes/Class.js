@@ -75,9 +75,8 @@ const Class = () => {
                                 <Card.Footer className="text-muted">Специалност - WIP</Card.Footer>
                             </Card>
                         }
-
-
                     </Col>
+
                     <Col lg={8}>
                         <div className={'d-flex justify-content-end mb-3'}>
                             <Button variant={'outline-primary'} className={'me-2'} onClick={() => navigate(-1)}>Назад</Button>

@@ -1,31 +1,35 @@
 import {useContext, useEffect, useState} from "react";
 import authContext from "../utils/authContext";
-import {Col, Container, Row} from "react-bootstrap";
+import {Alert, Col, Container, Row} from "react-bootstrap";
 
 const Home = () => {
 
     document.title = "ELSYS Helper | Начало";
 
     let [scopeMessage, setScopeMessage] = useState("Зареждане...");
+    let [alert, setAlert] = useState('info');
     const Auth = useContext(authContext);
 
     useEffect(() => {
-        console.log(Auth.scope)
         switch (Auth.scope) {
             case 'admin':
                 setScopeMessage('Вие сте Админ.');
+                setAlert('danger');
                 break;
             case 'user':
                 setScopeMessage('Вие сте Потребител.');
+                setAlert('info');
                 break;
             case '':
                 setScopeMessage('Профилът Ви не е потвърден! Свържете се с Админ за да поправи това.');
+                setAlert('warning');
                 break;
             default:
                 setScopeMessage('Не сте влезнали в Профила си!');
+                setAlert('info');
                 break;
         }
-    }, [Auth.scope, Auth.token]);
+    }, [Auth, Auth.scope, Auth.token]);
     return (
         <>
             <Container>
@@ -36,7 +40,9 @@ const Home = () => {
                         <h4>За преглед на Класове, Предмети и Профили може да ползвате Навигацията отгоре.</h4>
                         <h4>За повече информация може да отидете на съответната страница.</h4>
                         <hr className={'my-5'}/>
-                        <h3>{scopeMessage}</h3>
+                        <Alert variant={alert}>
+                            <h2>{scopeMessage}</h2>
+                        </Alert>
                     </Col>
                 </Row>
             </Container>

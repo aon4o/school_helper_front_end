@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
-import {useParams, useNavigate} from "react-router-dom";
-import {Col, Container, Row} from "react-bootstrap";
+import {useNavigate} from "react-router";
+import {useParams} from "react-router-dom";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import {toast} from "react-toastify";
 import {api_get} from "../../utils/fetch";
 import authContext from "../../utils/authContext";
@@ -36,7 +37,7 @@ const User = () => {
         <>
             <Container>
                 <Row>
-                    <Col lg={4} className={'justify-content-center mt-4'}>
+                    <Col lg={4} className={'justify-content-center'}>
                         {
                             user === undefined
                                 ?
@@ -44,6 +45,12 @@ const User = () => {
                                 :
                                 <UserCard user={user}/>
                         }
+                    </Col>
+                    <Col lg={8}>
+                        <div className={'d-flex justify-content-end mb-3'}>
+                            <Button variant={'outline-primary'} className={'me-2'} onClick={() => navigate(-1)}>Назад</Button>
+                        </div>
+
                     </Col>
                 </Row>
             </Container>

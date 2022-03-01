@@ -4,10 +4,10 @@ import Nav from "react-bootstrap/Nav";
 import {LinkContainer} from 'react-router-bootstrap'
 import {useContext, useEffect, useState} from "react";
 import authContext from "../../utils/authContext";
-import Cookies from "js-cookie";
 import {useNavigate} from "react-router";
-import {toast} from "react-toastify";
 import getUserScope from "../../utils/getUserScope";
+import handleLogout from "../../utils/handleLogout";
+import {toast} from "react-toastify";
 
 const NavBar = () => {
     const Auth = useContext(authContext);
@@ -27,15 +27,12 @@ const NavBar = () => {
                         break;
                 }
             })
-    }, [Auth.token])
+    }, [Auth, Auth.token])
 
-    const handleLogout = () => {
-        Auth.setAuth(false);
-        Auth.setToken('');
-        Auth.setScope(undefined);
-        Cookies.remove("token");
+    const handleLogoutButton = () => {
+        handleLogout(Auth);
         setUserVerified(false);
-        toast.success('Успешно излезнахте от Профила си!')
+        toast.success('Успешно излезнахте от Профила си!');
         navigate('/');
     };
 
@@ -79,7 +76,7 @@ const NavBar = () => {
                                     <LinkContainer to="/users/me" className={'ms-5'}>
                                         <Nav.Link>Профил</Nav.Link>
                                     </LinkContainer>
-                                    <Nav.Link onClick={() => handleLogout()}>Изход</Nav.Link>
+                                    <Nav.Link onClick={() => handleLogoutButton()}>Изход</Nav.Link>
                                 </>
                                 :
                                 <>
