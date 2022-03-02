@@ -35,7 +35,8 @@ const Users = () => {
                 } else {
                     toast.error(error.message);
                 }
-            }).finally(() => {setLoadingUsers(false)})
+            })
+            .finally(() => {setLoadingUsers(false)})
     }, [Auth.auth, Auth.token, navigate])
 
     useEffect(() => {
@@ -55,8 +56,6 @@ const Users = () => {
         setVerified(new_verified);
         setUnverified(new_unverified);
     }, [users])
-
-
 
     return (
         <>
@@ -86,16 +85,16 @@ const Users = () => {
                                     </Nav>
                                     <Tab.Content>
                                         <Tab.Pane eventKey="all">
-                                            <UsersTable users={users}/>
+                                            <UsersTable users={users} all_users={users} setAllUsers={setUsers}/>
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="admins">
-                                            <UsersTable users={admins}/>
+                                            <UsersTable users={admins} all_users={users} setAllUsers={setUsers}/>
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="users">
-                                            <UsersTable users={verified}/>
+                                            <UsersTable users={verified} all_users={users} setAllUsers={setUsers}/>
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="unverified">
-                                            <UsersTable users={unverified}/>
+                                            <UsersTable users={unverified} all_users={users} setAllUsers={setUsers}/>
                                         </Tab.Pane>
                                     </Tab.Content>
                                 </Tab.Container>

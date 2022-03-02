@@ -7,33 +7,38 @@ import {api_put} from "../utils/fetch";
 import {toast} from "react-toastify";
 import handleFetchError from "../utils/handleFetchError";
 import authContext from "../utils/authContext";
-import {useNavigate} from "react-router";
 
 const UsersTable = (props) => {
-    const users = props.users;
+    const {users, all_users, setAllUsers} = props;
     const Auth = useContext(authContext);
-    const navigate = useNavigate();
 
     const handleMakeUser = (email) => {
-        const scope = 'user';
-        api_put(`/users/${email}/scope`, {scope: scope}, Auth.token)
+        api_put(`/users/${email}/scope`, {scope: 'user'}, Auth.token)
             .then(() => {
-                users.forEach((user) => {
+                const new_users = [...all_users];
+                new_users.forEach((user) => {
                     if (user.email === email) {
-                        console.log(email);
-                        user.scope = scope;
+                        user.verified = true;
+                        user.admin = false;
                     }
                 })
-                navigate('/users')
+                setAllUsers(new_users);
                 toast.success(`Потребител '${email}' е Потвърден успешно!`);
             })
             .catch(error => handleFetchError(error))
     }
 
     const handleMakeAdmin = (email) => {
-        const body = {scope: 'admin'}
-        api_put(`/users/${email}/scope`, body, Auth.token)
+        api_put(`/users/${email}/scope`, {scope: 'admin'}, Auth.token)
             .then(() => {
+                const new_users = [...all_users];
+                new_users.forEach((user) => {
+                    if (user.email === email) {
+                        user.verified = true;
+                        user.admin = true;
+                    }
+                })
+                setAllUsers(new_users);
                 toast.success(`Потребител '${email}' вече е Админ!`);
             })
             .catch(error => handleFetchError(error))
@@ -41,9 +46,16 @@ const UsersTable = (props) => {
     }
 
     const handleNotVerified = (email) => {
-        const body = {scope: ''}
-        api_put(`/users/${email}/scope`, body, Auth.token)
+        api_put(`/users/${email}/scope`, {scope: ''}, Auth.token)
             .then(() => {
+                const new_users = [...all_users];
+                new_users.forEach((user) => {
+                    if (user.email === email) {
+                        user.verified = false;
+                        user.admin = false;
+                    }
+                })
+                setAllUsers(new_users);
                 toast.success(`Потребител '${email}' вече е не е Потвърден!`);
             })
             .catch(error => handleFetchError(error))
