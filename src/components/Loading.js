@@ -19,7 +19,9 @@ const Loading = (props) => {
                     </p>
                 </Alert>
                 :
-                <Spinner animation={'border'} variant={'primary'}/>
+                <div className={'d-flex justify-content-center'}>
+                    <Spinner animation={'border'} variant={'primary'}/>
+                </div>
             }
         </>
     )
