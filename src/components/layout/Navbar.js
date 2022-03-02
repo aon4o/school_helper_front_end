@@ -2,36 +2,18 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import {LinkContainer} from 'react-router-bootstrap'
-import {useContext, useEffect, useState} from "react";
+import {useContext} from "react";
 import authContext from "../../utils/authContext";
 import {useNavigate} from "react-router";
-import getUserScope from "../../utils/getUserScope";
 import handleLogout from "../../utils/handleLogout";
 import {toast} from "react-toastify";
 
 const NavBar = () => {
     const Auth = useContext(authContext);
     const navigate = useNavigate();
-    const [ userVerified, setUserVerified ] = useState(false);
-
-    useEffect(() => {
-        getUserScope(Auth.token)
-            .then(scope => {
-                switch (scope) {
-                    case 'admin':
-                    case 'user':
-                        setUserVerified(true);
-                        break;
-                    default:
-                        setUserVerified(false);
-                        break;
-                }
-            })
-    }, [Auth, Auth.token])
 
     const handleLogoutButton = () => {
         handleLogout(Auth);
-        setUserVerified(false);
         toast.success('Успешно излезнахте от Профила си!');
         navigate('/');
     };
@@ -49,7 +31,7 @@ const NavBar = () => {
                     <Navbar.Collapse id="basic-navbar-nav" className={"d-flex justify-content-end"}>
                         <Nav className="align-self-end">
 
-                            {userVerified ?
+                            {Auth.scope === 'user' || Auth.scope === 'admin' ?
                                 <>
                                     <LinkContainer to="/classes">
                                         <Nav.Link>Класове</Nav.Link>

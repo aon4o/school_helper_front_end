@@ -35,12 +35,12 @@ const Classes = () => {
     }, [Auth.auth, Auth.token, navigate])
 
     const deleteClass = (name, index) => {
-        api_delete("/classes/" + name + "/delete", null, Auth.token)
+        api_delete(`/classes/${name}/delete`, null, Auth.token)
             .then(() => {
-                toast.success("Класът '"+ name +"' беше успешно изтрит.")
                 const new_list = [...classes];
                 new_list.splice(index, 1);
                 setClasses(new_list);
+                toast.success(`Класът '${name}' беше успешно изтрит.`);
             })
             .catch((error) => {handleFetchError(error)})
     }

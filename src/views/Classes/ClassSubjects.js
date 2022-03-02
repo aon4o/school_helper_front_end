@@ -64,7 +64,6 @@ const Class = () => {
                     }
                 })
                 setClassSubjects(newClassSubjects);
-                console.log(classSubjects)
             })
             .catch((error) => {handleFetchError(error)})
     }

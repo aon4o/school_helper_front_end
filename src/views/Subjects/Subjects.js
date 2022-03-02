@@ -10,7 +10,6 @@ import {useNavigate} from "react-router";
 import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
 
-
 const Subjects = () => {
 
     document.title = "ELSYS Helper | Предмети";
@@ -36,7 +35,6 @@ const Subjects = () => {
     }, [Auth.auth, Auth.token, navigate])
 
     const deleteSubject = (name, index) => {
-        console.log(Auth.token);
         api_delete("/subjects/" + name + "/delete", null, Auth.token)
             .then(() => {
                 toast.success("Предметът '"+ name +"' беше успешно изтрит.")

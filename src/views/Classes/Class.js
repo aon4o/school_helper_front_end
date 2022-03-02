@@ -26,7 +26,6 @@ const Class = () => {
 
     document.title = `ELSYS Helper | ${name}`;
 
-    // GETTING THE CURRENT'S CLASS DETAILS
     useEffect(() => {
         if (!Auth.auth) {
             toast.error('За да достъпите тази страница трябва да влезете в Профила си!');

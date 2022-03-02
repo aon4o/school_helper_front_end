@@ -1,11 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router";
-import {Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import {toast} from "react-toastify";
-import {api_get} from "../../utils/fetch";
+import {api_delete, api_get} from "../../utils/fetch";
 import authContext from "../../utils/authContext";
 import Loading from "../../components/Loading";
 import UserCard from "../../components/UserCard";
+import handleLogout from "../../utils/handleLogout";
 
 
 const Me = () => {
@@ -38,6 +39,20 @@ const Me = () => {
             .finally(() => {setLoadingUser(false)})
     }, [Auth.auth, Auth.token, navigate])
 
+    const handleEdit = () => {
+        toast.info("WIP");
+    }
+
+    const handleDelete = () => {
+        api_delete(`/users/me/delete`, null, Auth.token)
+            .then(() => {
+                navigate('/');
+                handleLogout(Auth);
+                toast.success("Успешно изтрихте Профила си!");
+            })
+    }
+
+
     return (
         <>
             <Container>
@@ -51,7 +66,14 @@ const Me = () => {
                                 ?
                                 <Loading error={!loadingUser}/>
                                 :
-                                <UserCard user={user}/>
+                                <>
+                                    <UserCard user={user}/>
+                                    <div className={'mt-2 d-flex justify-content-around'}>
+                                        <Button variant={'warning'} className={'flex-fill'} onClick={() => handleEdit()}>Промяна</Button>
+                                        <div className={'mx-1'}/>
+                                        <Button variant={'danger'} className={'flex-fill'} onClick={() => handleDelete()}>Изтриване</Button>
+                                    </div>
+                                </>
                         }
                     </Col>
                 </Row>
