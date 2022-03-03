@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import {Button, Col, Container, Row} from "react-bootstrap";
+import {LinkContainer} from 'react-router-bootstrap'
 import {toast} from "react-toastify";
 import {api_delete, api_get} from "../../utils/fetch";
 import authContext from "../../utils/authContext";
@@ -39,10 +40,6 @@ const Me = () => {
             .finally(() => {setLoadingUser(false)})
     }, [Auth.auth, Auth.token, navigate])
 
-    const handleEdit = () => {
-        toast.info("WIP");
-    }
-
     const handleDelete = () => {
         api_delete(`/users/me/delete`, null, Auth.token)
             .then(() => {
@@ -51,7 +48,6 @@ const Me = () => {
                 toast.success("Успешно изтрихте Профила си!");
             })
     }
-
 
     return (
         <>
@@ -69,7 +65,9 @@ const Me = () => {
                                 <>
                                     <UserCard user={user}/>
                                     <div className={'mt-2 d-flex justify-content-around'}>
-                                        <Button variant={'warning'} className={'flex-fill'} onClick={() => handleEdit()}>Промяна</Button>
+                                        <LinkContainer to={'edit'}>
+                                            <Button variant={'warning'} className={'flex-fill'}>Промяна</Button>
+                                        </LinkContainer>
                                         <div className={'mx-1'}/>
                                         <Button variant={'danger'} className={'flex-fill'} onClick={() => handleDelete()}>Изтриване</Button>
                                     </div>

@@ -25,6 +25,7 @@ import SubjectEdit from "./views/Subjects/SubjectEdit";
 
 import Users from "./views/Users/Users";
 import Me from "./views/Users/Me";
+import MeEdit from "./views/Users/MeEdit";
 import User from "./views/Users/User";
 import getUserScope from "./utils/getUserScope";
 
@@ -66,6 +67,7 @@ const App = () => {
                         <Route path="users">
                             <Route index element={<Users />}/>
                             <Route path="me" element={<Me />} />
+                            <Route path="me/edit" element={<MeEdit />} />
                             <Route path=":email" element={<User />}/>
                         </Route>
                         <Route path="/discord" element={<DiscordBot />} />
