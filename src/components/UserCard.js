@@ -23,10 +23,16 @@ const UserCard = (props) => {
                         {user.first_name} {user.last_name}
                     </Card.Title>
                     <Card.Text>
-                        Класен ръководител на{' '}
-                        <LinkContainer to={'/#'}>
-                            <Button size={'sm'} variant={'primary'}>Клас</Button>
-                        </LinkContainer>
+                        {user.class_ ?
+                            <>
+                                Класен ръководител на{' '}
+                                <LinkContainer to={`/classes/${user.class_.name}`}>
+                                    <Button size={'sm'} variant={'primary'}>'{user.class_.name}'</Button>
+                                </LinkContainer>
+                            </>
+                            :
+                            <>НЕ е Класен Ръководител.</>
+                        }
                     </Card.Text>
                 </Card.Body>
                 <Card.Footer className={'border-light'}>

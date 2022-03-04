@@ -75,7 +75,18 @@ const Classes = () => {
                                         <tr key={index} className="text-center">
                                             <td>{class_.name}</td>
                                             <td>
-                                                WIP
+                                                {
+                                                    class_.class_teacher ?
+                                                        <LinkContainer to={`/users/${class_.class_teacher.email}`}>
+                                                            <Button variant={'outline-primary'}>
+                                                                {class_.class_teacher.first_name} {class_.class_teacher.last_name}
+                                                            </Button>
+                                                        </LinkContainer>
+                                                        :
+                                                        <LinkContainer to={`${class_.name}/class_teacher`}>
+                                                            <Button variant={'outline-danger'}>Няма Класен ръководител</Button>
+                                                        </LinkContainer>
+                                                }
                                             </td>
                                             <td>
                                                 <CopyToClipboard text={class_.key} onCopy={(text, status) => handleCopy(text, status)}>

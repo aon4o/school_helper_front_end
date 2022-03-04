@@ -8,7 +8,7 @@ import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
 
 
-const Class = () => {
+const ClassSubjects = () => {
 
     const { name } = useParams();
     const navigate = useNavigate();
@@ -58,7 +58,7 @@ const Class = () => {
             .then(() => {
                 toast.success(`Предмет '${subject.name}' беше успешно премахнат от Клас ${class_.name}.`);
                 const newClassSubjects = [...classSubjects];
-                classSubjects.map((classSubject, index) => {
+                classSubjects.forEach((classSubject, index) => {
                     if (classSubject.name === subject.name) {
                         newClassSubjects.splice(index, 1);
                     }
@@ -124,4 +124,4 @@ const Class = () => {
     );
 };
 
-export default Class;
+export default ClassSubjects;

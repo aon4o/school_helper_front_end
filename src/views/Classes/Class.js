@@ -1,4 +1,4 @@
-import {Button, Card, Col, Container, ListGroup, Row, Table} from "react-bootstrap";
+import {Alert, Button, Card, Col, Container, Row, Table} from "react-bootstrap";
 import React, {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {api_get} from "../../utils/fetch";
@@ -52,26 +52,30 @@ const Class = () => {
                         {class_ === undefined ?
                             <Loading error={!loadingClass}/>
                             :
-                            <Card border={'primary'}>
-                                {/*<Card.Header>Featured</Card.Header>*/}
+                            <Card text={'white'} bg={'primary'} className={'border-0'}>
                                 <Card.Body>
                                     <Card.Title>{class_.name}</Card.Title>
                                     <Card.Text>
-                                        Класен ръководител - WIP
+                                        {
+                                            class_.class_teacher ?
+                                                <>
+                                                    Класен ръководител -
+                                                    <LinkContainer to={`/users/${class_.class_teacher.email}`}>
+                                                        <Button variant={'primary'}>
+                                                            {class_.class_teacher.first_name} {class_.class_teacher.last_name}
+                                                        </Button>
+                                                    </LinkContainer>
+                                                </>
+                                                :
+                                                <Alert variant={'danger'} className={'text-danger'}>Няма класен ръководител</Alert>
+                                        }
                                     </Card.Text>
-                                </Card.Body>
-                                <ListGroup variant="flush">
-                                    <ListGroup.Item>WIP</ListGroup.Item>
-                                    <ListGroup.Item>WIP in</ListGroup.Item>
-                                    <ListGroup.Item>WIP</ListGroup.Item>
-                                </ListGroup>
-                                <Card.Body>
                                     Ключ за Discord -
                                     <CopyToClipboard className={'ms-2'} text={class_.key} onCopy={(text, status) => handleCopy(text, status)}>
-                                        <Button variant={'outline-primary'}>Копиране</Button>
+                                        <Button variant={'primary'}>Копиране</Button>
                                     </CopyToClipboard>
                                 </Card.Body>
-                                <Card.Footer className="text-muted">Специалност - WIP</Card.Footer>
+                                <Card.Footer>Специалност - WIP</Card.Footer>
                             </Card>
                         }
                     </Col>
@@ -80,7 +84,10 @@ const Class = () => {
                         <div className={'d-flex justify-content-end mb-3'}>
                             <Button variant={'outline-primary'} className={'me-2'} onClick={() => navigate(-1)}>Назад</Button>
                             <LinkContainer to={`subjects`}>
-                                <Button variant={'outline-primary'}>Задаване на Предмети</Button>
+                                <Button variant={'outline-primary'} className={'me-2'}>Задаване на Предмети</Button>
+                            </LinkContainer>
+                            <LinkContainer to={`class_teacher`}>
+                                <Button variant={'outline-primary'}>Задаване на Класен ръководител</Button>
                             </LinkContainer>
                         </div>
 

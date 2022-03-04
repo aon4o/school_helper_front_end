@@ -28,6 +28,7 @@ import Me from "./views/Users/Me";
 import MeEdit from "./views/Users/MeEdit";
 import User from "./views/Users/User";
 import getUserScope from "./utils/getUserScope";
+import ClassTeacher from "./views/Classes/ClassTeacher";
 
 const App = () => {
     const [auth, setAuth] = useState(false);
@@ -57,6 +58,7 @@ const App = () => {
                             <Route path=":name" element={<Class />}/>
                             <Route path=":name/edit" element={<ClassEdit/>} />
                             <Route path=":name/subjects" element={<ClassSubjects/>} />
+                            <Route path=":name/class_teacher" element={<ClassTeacher/>} />
                         </Route>
                         <Route path="subjects">
                             <Route index element={<Subjects />}/>
