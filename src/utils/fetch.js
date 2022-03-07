@@ -42,7 +42,6 @@ async function api_put(url, body, token) {
 }
 
 async function api_delete(url, body, token) {
-    console.log(token);
     let response = await fetch(process.env.REACT_APP_API_URL + url, {
         method: "DELETE",
         body: JSON.stringify(body),
@@ -51,7 +50,6 @@ async function api_delete(url, body, token) {
             "Authorization": `Bearer ${token}`,
         }
     });
-    console.log(response);
     if (!response.ok) {
         throw await response.json();
     }

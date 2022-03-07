@@ -11,17 +11,18 @@ import {faX} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
-const ClassTeacher = () => {
+const ClassSubjectTeacher = () => {
 
-    const { name } = useParams();
+    const { class_name, subject_name } = useParams();
     const navigate = useNavigate();
     const Auth = useContext(authContext);
 
     const [ class_, setClass ] = useState(undefined);
+    const [ classSubject, setClassSubject ] = useState(undefined);
     const [ users, setUsers ] = useState([]);
     const [ loading, setLoading ] = useState(true);
 
-    document.title = `ELSYS Helper | ${name} | Класен`;
+    document.title = `ELSYS Helper | ${class_name}`;
 
     useEffect(() => {
         if (!Auth.auth) {
@@ -29,39 +30,34 @@ const ClassTeacher = () => {
             navigate('/login');
         }
 
-        api_get(`/classes/${name}`, Auth.token)
+        api_get(`/classes/${class_name}`, Auth.token)
             .then((response) => {setClass(response);})
-            .catch((error) => {handleFetchError(error, () => navigate('/classes'));})
+            .catch((error) => {handleFetchError(error, () => navigate(-1))})
+
+        api_get(`/classes/${class_name}/subjects/${subject_name}`, Auth.token)
+            .then((response) => {setClassSubject(response);})
+            .catch((error) => {handleFetchError(error, () => navigate(-1))})
 
         api_get(`/users`, Auth.token)
-            .then((response) => {
-                const free_teachers = [];
-                response.forEach((user) => {
-                    if (user.verified && user.class_ === null) {
-                        free_teachers.push(user);
-                    }
-                })
-                setUsers(free_teachers);
-
-            })
-            .catch((error) => {handleFetchError(error)})
+            .then((response) => {setUsers(response)})
+            .catch((error) => {handleFetchError(error, () => navigate(-1))})
             .finally(() => setLoading(false))
 
-    }, [Auth.auth, Auth.token, name, navigate])
+    }, [Auth.auth, Auth.token, class_name, navigate, subject_name])
 
-    const handleSetClassTeacher = (email) => {
-        api_put(`/classes/${class_.name}/class_teacher/set`, {email: email}, Auth.token)
+    const handleSetClassSubjectTeacher = (email) => {
+        api_put(`/classes/${class_.name}/subjects/${classSubject.subject.name}/set_teacher`, {email: email}, Auth.token)
             .then(() => {
-                toast.success("Класният ръководител бе успешно зададен!");
+                toast.success(`Учител за предмет '${classSubject.subject.name}' бе успешно зададен!`);
                 navigate(-1);
             })
             .catch((error) => handleFetchError(error))
     }
 
-    const handleRemoveClassTeacher = () => {
-        api_delete(`/classes/${class_.name}/class_teacher/remove`, null, Auth.token)
+    const handleRemoveClassSubjectTeacher = () => {
+        api_delete(`/classes/${class_.name}/subjects/${classSubject.subject.name}/remove_teacher`, null, Auth.token)
             .then(() => {
-                toast.success("Класният ръководител бе успешно премахнат!");
+                toast.success(`Учителят по предмет '${classSubject.subject.name}' бе премахнат успешно!`);
                 navigate(-1);
             })
             .catch((error) => handleFetchError(error))
@@ -72,28 +68,28 @@ const ClassTeacher = () => {
             <Container>
                 <Row className={'justify-content-center'}>
                     <Col lg={10} className={'mb-4'}>
-                        <h1 className="text-center">'{name}' клас</h1>
+                        <h1 className="text-center">'{class_name}' клас - '{subject_name}'</h1>
                         <div className={'d-flex justify-content-end'}>
                             <Button variant={'outline-primary'} onClick={() => navigate(-1)}>Назад</Button>
                         </div>
                     </Col>
                     <Col md={12}>
                         {
-                            class_ === undefined || users === [] ?
+                            classSubject === undefined || users === [] ?
                             <Loading error={!loading}/>
                                 :
                                 <>
-                                    <h3 className={'text-center'}>Класен ръководител -{' '}
+                                    <h3 className={'text-center'}>Преподавател -{' '}
                                         {
-                                            class_.class_teacher ?
+                                            classSubject.teacher ?
                                                 <>
-                                                    <LinkContainer to={`/users/${class_.class_teacher.email}`}>
+                                                    <LinkContainer to={`/users/${classSubject.teacher.email}`}>
                                                         <Button size={'lg'} variant={'outline-primary'}>
-                                                            {class_.class_teacher.first_name} {class_.class_teacher.last_name}
+                                                            {classSubject.teacher.first_name} {classSubject.teacher.last_name}
                                                         </Button>
                                                     </LinkContainer>
                                                     {' '}
-                                                    <Button size={'lg'} variant={'outline-danger'} onClick={handleRemoveClassTeacher}>
+                                                    <Button size={'lg'} variant={'outline-danger'} onClick={handleRemoveClassSubjectTeacher}>
                                                         <FontAwesomeIcon icon={faX} />
                                                     </Button>
                                                 </>
@@ -107,7 +103,7 @@ const ClassTeacher = () => {
                                             <>
                                             {
                                                 users.map((user) => (
-                                                    <Button variant={'primary'} className={'m-1'} onClick={() => handleSetClassTeacher(user.email)}>
+                                                    <Button variant={'primary'} className={'m-1'} onClick={() => handleSetClassSubjectTeacher(user.email)}>
                                                         {user.first_name} {user.last_name}
                                                     </Button>
                                                 ))
@@ -134,4 +130,4 @@ const ClassTeacher = () => {
     );
 };
 
-export default ClassTeacher;
+export default ClassSubjectTeacher;

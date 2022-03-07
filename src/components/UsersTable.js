@@ -7,6 +7,8 @@ import {api_put} from "../utils/fetch";
 import {toast} from "react-toastify";
 import handleFetchError from "../utils/handleFetchError";
 import authContext from "../utils/authContext";
+import {CopyToClipboard} from "react-copy-to-clipboard/src";
+import handleCopy from "../utils/handleCopy";
 
 const UsersTable = (props) => {
     const {users, all_users, setAllUsers} = props;
@@ -81,9 +83,24 @@ const UsersTable = (props) => {
                             users.map((user, index) => (
                                 <tr key={index} className="text-center">
                                     <td>{user.first_name} {user.last_name}</td>
-                                    <td>{user.email}</td>
+                                    <td><div className={'d-flex justify-content-center align-content-center'}>
+                                        <CopyToClipboard text={user.email} onCopy={handleCopy}>
+                                            <Button variant={'outline-primary'}>
+                                                {user.email}
+                                            </Button>
+                                        </CopyToClipboard>
+                                    </div></td>
                                     <td>
-                                        WIP
+                                        {
+                                            user.class_ ?
+                                                <>
+                                                    <LinkContainer to={`/classes/${user.class_.name}`}>
+                                                        <Button  variant={'outline-primary'}>{user.class_.name}</Button>
+                                                    </LinkContainer>
+                                                </>
+                                                :
+                                                <>Нe е Класен Ръководител.</>
+                                        }
                                     </td>
                                     <td>
                                         <h4>

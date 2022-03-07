@@ -1,4 +1,4 @@
-import {Alert, Button, Card, Col, Container, Row, Table} from "react-bootstrap";
+import {Alert, Button, Col, Container, Row, Table} from "react-bootstrap";
 import React, {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {api_get} from "../../utils/fetch";
@@ -6,18 +6,17 @@ import {useParams, useNavigate} from "react-router";
 import Loading from "../../components/Loading";
 import {LinkContainer} from "react-router-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExternalLink} from "@fortawesome/free-solid-svg-icons";
-import handleCopy from "../../utils/handleCopy";
-import {CopyToClipboard} from "react-copy-to-clipboard/src";
+import {faEdit, faExternalLink} from "@fortawesome/free-solid-svg-icons";
 import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
+import ClassCard from "../../components/ClassCard";
 
 
 const Class = () => {
 
     const { name } = useParams();
     const [ class_, setClass ] = useState(undefined);
-    const [ subjects, setSubjects ] = useState(undefined);
+    const [ classSubjects, setClassSubjects ] = useState(undefined);
     const [ loadingClass, setLoadingClass ] = useState(true);
     const [ loadingSubjects, setLoadingSubjects ] = useState(true);
 
@@ -38,7 +37,7 @@ const Class = () => {
             .finally(() => {setLoadingClass(false)})
 
         api_get(`/classes/${name}/subjects`, Auth.token)
-            .then((response) => {setSubjects(response)})
+            .then((response) => {setClassSubjects(response)})
             .catch((error) => {handleFetchError(error)})
             .finally(() => {setLoadingSubjects(false)})
     }, [Auth.auth, Auth.token, name, navigate])
@@ -52,72 +51,72 @@ const Class = () => {
                         {class_ === undefined ?
                             <Loading error={!loadingClass}/>
                             :
-                            <Card text={'white'} bg={'primary'} className={'border-0'}>
-                                <Card.Body>
-                                    <Card.Title>{class_.name}</Card.Title>
-                                    <Card.Text>
-                                        {
-                                            class_.class_teacher ?
-                                                <>
-                                                    Класен ръководител -
-                                                    <LinkContainer to={`/users/${class_.class_teacher.email}`}>
-                                                        <Button variant={'primary'}>
-                                                            {class_.class_teacher.first_name} {class_.class_teacher.last_name}
-                                                        </Button>
-                                                    </LinkContainer>
-                                                </>
-                                                :
-                                                <Alert variant={'danger'} className={'text-danger'}>Няма класен ръководител</Alert>
-                                        }
-                                    </Card.Text>
-                                    Ключ за Discord -
-                                    <CopyToClipboard className={'ms-2'} text={class_.key} onCopy={(text, status) => handleCopy(text, status)}>
-                                        <Button variant={'primary'}>Копиране</Button>
-                                    </CopyToClipboard>
-                                </Card.Body>
-                                <Card.Footer>Специалност - WIP</Card.Footer>
-                            </Card>
+                            <ClassCard class_={class_}/>
                         }
                     </Col>
 
                     <Col lg={8}>
                         <div className={'d-flex justify-content-end mb-3'}>
-                            <Button variant={'outline-primary'} className={'me-2'} onClick={() => navigate(-1)}>Назад</Button>
-                            <LinkContainer to={`subjects`}>
-                                <Button variant={'outline-primary'} className={'me-2'}>Задаване на Предмети</Button>
+                            <LinkContainer to={`subjects`} className={'me-2'}>
+                                <Button variant={'outline-primary'}>Задаване на Предмети</Button>
                             </LinkContainer>
-                            <LinkContainer to={`class_teacher`}>
+                            <LinkContainer to={`class_teacher`} className={'me-2'}>
                                 <Button variant={'outline-primary'}>Задаване на Класен ръководител</Button>
                             </LinkContainer>
+                            <Button variant={'outline-primary'} onClick={() => navigate(-1)}>Назад</Button>
                         </div>
 
-                        {subjects === undefined ?
-                            <Loading error={!loadingSubjects}/>
-                            :
-                            <Table striped bordered hover responsive className="mb-5">
-                                <thead>
-                                <tr>
-                                    <th>Клас</th>
-                                    <th>Учител</th>
-                                    <th>Действия</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {subjects.map((subject, index) => (
-                                    <tr key={index} className={'text-center'}>
-                                        <td>{subject.name}</td>
-                                        <td>WIP</td>
-                                        <td>
-                                            <LinkContainer to={`#`}>
-                                                <Button variant={"success"} className="m-1">
-                                                    <FontAwesomeIcon icon={faExternalLink} />
-                                                </Button>
-                                            </LinkContainer>
-                                        </td>
-                                    </tr>
-                                ))}
-                                </tbody>
-                            </Table>
+                        {
+                            classSubjects === undefined ?
+                                <Loading error={!loadingSubjects}/>
+                                :
+                                <>{
+                                    classSubjects.length === 0 ?
+                                        <Alert variant={'info'}>
+                                            <Alert.Heading className={'text-center my-3'}>
+                                                Класът няма зададени предмети!
+                                            </Alert.Heading>
+                                        </Alert>
+                                        :
+                                        <Table striped bordered hover responsive className="mb-5">
+                                            <thead>
+                                            <tr>
+                                                <th>Клас</th>
+                                                <th>Учител</th>
+                                                <th>Действия</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {classSubjects.map((classSubject, index) => (
+                                                <tr key={index} className={'text-center'}>
+                                                    <td>{classSubject.subject.name}</td>
+                                                    <td>
+                                                        {
+                                                            classSubject.teacher ?
+                                                                <>
+                                                                    {classSubject.teacher.first_name} {classSubject.teacher.last_name}
+                                                                </>
+                                                                :
+                                                                <>Няма учител</>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <LinkContainer to={`#`}>
+                                                            <Button variant={"success"} className="m-1">
+                                                                <FontAwesomeIcon icon={faExternalLink} />
+                                                            </Button>
+                                                        </LinkContainer>
+                                                        <LinkContainer to={`subjects/${classSubject.subject.name}/teacher`}>
+                                                            <Button variant={"warning"} className="m-1">
+                                                                <FontAwesomeIcon icon={faEdit} />
+                                                            </Button>
+                                                        </LinkContainer>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                            </tbody>
+                                        </Table>
+                                }</>
                         }
 
 

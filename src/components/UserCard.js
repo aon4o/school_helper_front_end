@@ -23,7 +23,8 @@ const UserCard = (props) => {
                         {user.first_name} {user.last_name}
                     </Card.Title>
                     <Card.Text>
-                        {user.class_ ?
+                        {
+                            user.class_ ?
                             <>
                                 Класен ръководител на{' '}
                                 <LinkContainer to={`/classes/${user.class_.name}`}>

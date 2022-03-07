@@ -48,7 +48,7 @@ const ClassSubjects = () => {
         api_post(`/classes/${class_.name}/subjects/add`,{"name": subject.name}, Auth.token)
             .then(() => {
                 toast.success(`Предмет '${subject.name}' беше успешно добавен на Клас ${class_.name}.`);
-                setClassSubjects([...classSubjects, subject]);
+                setClassSubjects([...classSubjects, {subject: subject, teacher: null}]);
             })
             .catch((error) => {handleFetchError(error)})
     }
@@ -59,7 +59,7 @@ const ClassSubjects = () => {
                 toast.success(`Предмет '${subject.name}' беше успешно премахнат от Клас ${class_.name}.`);
                 const newClassSubjects = [...classSubjects];
                 classSubjects.forEach((classSubject, index) => {
-                    if (classSubject.name === subject.name) {
+                    if (classSubject.subject.name === subject.name) {
                         newClassSubjects.splice(index, 1);
                     }
                 })
@@ -71,7 +71,7 @@ const ClassSubjects = () => {
     const checkClassHasSubject = (subjects, subject) => {
         let flag = false;
         subjects.forEach((subjectInJson) => {
-            if (subjectInJson.name === subject.name) {
+            if (subjectInJson.subject.name === subject.name) {
                 flag = true;
             }
         })
