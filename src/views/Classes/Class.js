@@ -81,8 +81,8 @@ const Class = () => {
                                         <Table striped bordered hover responsive className="mb-5">
                                             <thead>
                                             <tr>
-                                                <th>Клас</th>
-                                                <th>Учител</th>
+                                                <th>Предмент</th>
+                                                <th>Преподавател</th>
                                                 <th>Действия</th>
                                             </tr>
                                             </thead>
@@ -93,16 +93,22 @@ const Class = () => {
                                                     <td>
                                                         {
                                                             classSubject.teacher ?
-                                                                <>
-                                                                    {classSubject.teacher.first_name} {classSubject.teacher.last_name}
-                                                                </>
+                                                                <LinkContainer to={`/users/${classSubject.teacher.email}`}>
+                                                                    <Button variant={'outline-primary'}>
+                                                                        {classSubject.teacher.first_name} {classSubject.teacher.last_name}
+                                                                    </Button>
+                                                                </LinkContainer>
                                                                 :
-                                                                <>Няма учител</>
+                                                                <LinkContainer to={`subjects/${classSubject.subject.name}/teacher`}>
+                                                                    <Button variant={'outline-danger'}>
+                                                                        Няма Преподавател
+                                                                    </Button>
+                                                                </LinkContainer>
                                                         }
                                                     </td>
                                                     <td>
                                                         <LinkContainer to={`#`}>
-                                                            <Button variant={"success"} className="m-1">
+                                                            <Button disabled variant={"success"} className="m-1">
                                                                 <FontAwesomeIcon icon={faExternalLink} />
                                                             </Button>
                                                         </LinkContainer>

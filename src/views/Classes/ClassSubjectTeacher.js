@@ -68,7 +68,7 @@ const ClassSubjectTeacher = () => {
             <Container>
                 <Row className={'justify-content-center'}>
                     <Col lg={10} className={'mb-4'}>
-                        <h1 className="text-center">'{class_name}' клас - '{subject_name}'</h1>
+                        <h1 className="text-center">'{class_name}' клас - {subject_name}</h1>
                         <div className={'d-flex justify-content-end'}>
                             <Button variant={'outline-primary'} onClick={() => navigate(-1)}>Назад</Button>
                         </div>

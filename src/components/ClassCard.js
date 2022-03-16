@@ -1,11 +1,12 @@
 import {Alert, Button, Card} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
-import handleCopy from "../utils/handleCopy";
-import React from "react";
-import {CopyToClipboard} from "react-copy-to-clipboard/src";
+import React, {useContext} from "react";
+import handleCopyClassKey from "../utils/handleCopyClassKey";
+import authContext from "../utils/authContext";
 
 const ClassCard = (props) => {
     const class_ = props.class_;
+    const Auth = useContext(authContext);
 
     return (
         <>
@@ -29,10 +30,8 @@ const ClassCard = (props) => {
                     </Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                    Ключ за Discord:
-                    <CopyToClipboard className={'ms-2'} text={class_.key} onCopy={(text, status) => handleCopy(text, status)}>
-                        <Button size={'md'} variant={'primary'}>Копиране</Button>
-                    </CopyToClipboard>
+                    Ключ за Discord:{' '}
+                    <Button variant={'primary'} onClick={() => handleCopyClassKey(class_.name, Auth.token)}>Копиране</Button>
                 </Card.Footer>
             </Card>
         </>

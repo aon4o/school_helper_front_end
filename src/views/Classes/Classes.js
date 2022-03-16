@@ -6,11 +6,10 @@ import {faTrash, faEdit, faExternalLink} from "@fortawesome/free-solid-svg-icons
 import {toast} from "react-toastify";
 import {LinkContainer} from 'react-router-bootstrap';
 import Loading from "../../components/Loading";
-import {CopyToClipboard} from "react-copy-to-clipboard/src";
-import handleCopy from "../../utils/handleCopy";
 import authContext from "../../utils/authContext";
 import {useNavigate} from "react-router";
 import handleFetchError from "../../utils/handleFetchError";
+import handleCopyClassKey from "../../utils/handleCopyClassKey";
 
 
 const Classes = () => {
@@ -42,7 +41,7 @@ const Classes = () => {
                 setClasses(new_list);
                 toast.success(`Класът '${name}' беше успешно изтрит.`);
             })
-            .catch((error) => {handleFetchError(error)})
+            .catch((error) => handleFetchError(error))
     }
 
     return (
@@ -89,9 +88,9 @@ const Classes = () => {
                                                 }
                                             </td>
                                             <td>
-                                                <CopyToClipboard text={class_.key} onCopy={(text, status) => handleCopy(text, status)}>
-                                                    <Button variant={'outline-primary'}>Копиране на Ключа</Button>
-                                                </CopyToClipboard>
+                                                <Button variant={'outline-primary'} onClick={() => handleCopyClassKey(class_.name, Auth.token)}>
+                                                    Копиране на Ключа
+                                                </Button>
                                             </td>
                                             <td>
                                                 <LinkContainer to={`${class_.name}`}>
