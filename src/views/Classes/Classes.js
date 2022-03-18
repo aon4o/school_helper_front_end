@@ -1,6 +1,6 @@
-import {Button, Col, Container, Row, Table} from "react-bootstrap";
+import {Alert, Button, Col, Container, Row, Table} from "react-bootstrap";
 import {api_delete, api_get} from "../../utils/fetch";
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash, faEdit, faExternalLink} from "@fortawesome/free-solid-svg-icons";
 import {toast} from "react-toastify";
@@ -16,7 +16,7 @@ const Classes = () => {
 
     document.title = "ELSYS Helper | Класове";
 
-    const [classes, setClasses] = useState([]);
+    const [classes, setClasses] = useState(undefined);
     const [loading, setLoading] = useState(true);
     const Auth = useContext(authContext);
     const navigate = useNavigate();
@@ -29,7 +29,7 @@ const Classes = () => {
 
         api_get("/classes", Auth.token)
             .then(response => setClasses(response))
-            .catch((error) => {handleFetchError(error)})
+            .catch(handleFetchError)
             .finally(() => setLoading(false));
     }, [Auth.auth, Auth.token, navigate])
 
@@ -41,7 +41,7 @@ const Classes = () => {
                 setClasses(new_list);
                 toast.success(`Класът '${name}' беше успешно изтрит.`);
             })
-            .catch((error) => handleFetchError(error))
+            .catch(handleFetchError)
     }
 
     return (
@@ -57,61 +57,72 @@ const Classes = () => {
                             </LinkContainer>
                         </div>
 
-                        { classes.length === 0 ?
+                        { classes === undefined ?
                             <Loading error={!loading}/>
                             :
-                            <Table striped bordered hover responsive className="mb-5">
-                                <thead>
-                                <tr>
-                                    <th>Клас</th>
-                                    <th>Класен Ръководител</th>
-                                    <th>Ключ</th>
-                                    <th>Действия</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {classes.map((class_, index) => (
-                                        <tr key={index} className="text-center">
-                                            <td>{class_.name}</td>
-                                            <td>
-                                                {
-                                                    class_.class_teacher ?
-                                                        <LinkContainer to={`/users/${class_.class_teacher.email}`}>
-                                                            <Button variant={'outline-primary'}>
-                                                                {class_.class_teacher.first_name} {class_.class_teacher.last_name}
+                            <>
+                                {
+                                    classes.length === 0 ?
+                                        <Alert variant={'info'}>
+                                            <Alert.Heading className={'text-center my-3'}>
+                                                Няма създадени Класове!
+                                            </Alert.Heading>
+                                        </Alert>
+                                        :
+                                        <Table striped bordered hover responsive className="mb-5">
+                                            <thead>
+                                            <tr>
+                                                <th>Клас</th>
+                                                <th>Класен Ръководител</th>
+                                                <th>Ключ</th>
+                                                <th>Действия</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {classes.map((class_, index) => (
+                                                    <tr key={index} className="text-center">
+                                                        <td>{class_.name}</td>
+                                                        <td>
+                                                            {
+                                                                class_.class_teacher ?
+                                                                    <LinkContainer to={`/users/${class_.class_teacher.email}`}>
+                                                                        <Button variant={'outline-primary'}>
+                                                                            {class_.class_teacher.first_name} {class_.class_teacher.last_name}
+                                                                        </Button>
+                                                                    </LinkContainer>
+                                                                    :
+                                                                    <LinkContainer to={`${class_.name}/class_teacher`}>
+                                                                        <Button variant={'outline-danger'}>Няма Класен ръководител</Button>
+                                                                    </LinkContainer>
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            <Button variant={'outline-primary'} onClick={() => handleCopyClassKey(class_.name, Auth.token)}>
+                                                                Копиране на Ключа
                                                             </Button>
-                                                        </LinkContainer>
-                                                        :
-                                                        <LinkContainer to={`${class_.name}/class_teacher`}>
-                                                            <Button variant={'outline-danger'}>Няма Класен ръководител</Button>
-                                                        </LinkContainer>
-                                                }
-                                            </td>
-                                            <td>
-                                                <Button variant={'outline-primary'} onClick={() => handleCopyClassKey(class_.name, Auth.token)}>
-                                                    Копиране на Ключа
-                                                </Button>
-                                            </td>
-                                            <td>
-                                                <LinkContainer to={`${class_.name}`}>
-                                                    <Button variant={"success"} className="m-1">
-                                                        <FontAwesomeIcon icon={faExternalLink} />
-                                                    </Button>
-                                                </LinkContainer>
-                                                <LinkContainer to={`${class_.name}/edit`}>
-                                                    <Button variant={"warning"} className="m-1">
-                                                        <FontAwesomeIcon icon={faEdit} />
-                                                    </Button>
-                                                </LinkContainer>
-                                                <Button onClick={() => deleteClass(class_.name, index)} variant={"danger"} className="m-1">
-                                                    <FontAwesomeIcon icon={faTrash} />
-                                                </Button>
-                                            </td>
-                                        </tr>
-                                    )
-                                )}
-                                </tbody>
-                            </Table>
+                                                        </td>
+                                                        <td>
+                                                            <LinkContainer to={`${class_.name}`}>
+                                                                <Button variant={"success"} className="m-1">
+                                                                    <FontAwesomeIcon icon={faExternalLink} />
+                                                                </Button>
+                                                            </LinkContainer>
+                                                            <LinkContainer to={`${class_.name}/edit`}>
+                                                                <Button variant={"warning"} className="m-1">
+                                                                    <FontAwesomeIcon icon={faEdit} />
+                                                                </Button>
+                                                            </LinkContainer>
+                                                            <Button onClick={() => deleteClass(class_.name, index)} variant={"danger"} className="m-1">
+                                                                <FontAwesomeIcon icon={faTrash} />
+                                                            </Button>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            )}
+                                            </tbody>
+                                        </Table>
+                                }
+                            </>
                         }
                     </Col>
                 </Row>

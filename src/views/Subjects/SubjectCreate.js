@@ -25,7 +25,7 @@ const SubjectCreate = () => {
         event.preventDefault();
         api_post("/subjects/create", {"name": name}, Auth.token)
             .then(() => {toast.success("Предмет '"+name+"' беше добавен успешно!");})
-            .catch((error) => {handleFetchError(error);});
+            .catch(handleFetchError);
     }
 
     return (

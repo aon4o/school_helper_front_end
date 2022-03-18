@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router";
-import {Button, Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row, Table} from "react-bootstrap";
 import {LinkContainer} from 'react-router-bootstrap'
 import {toast} from "react-toastify";
 import {api_delete, api_get} from "../../utils/fetch";
@@ -8,6 +8,7 @@ import authContext from "../../utils/authContext";
 import Loading from "../../components/Loading";
 import UserCard from "../../components/UserCard";
 import handleLogout from "../../utils/handleLogout";
+import handleFetchError from "../../utils/handleFetchError";
 
 
 const Me = () => {
@@ -29,14 +30,7 @@ const Me = () => {
 
         api_get(`/users/me`, Auth.token)
             .then((response) => {setUser(response)})
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                    navigate('/');
-                } else {
-                    toast.error(error.message);
-                }
-            })
+            .catch(handleFetchError)
             .finally(() => {setLoadingUser(false)})
     }, [Auth.auth, Auth.token, navigate])
 

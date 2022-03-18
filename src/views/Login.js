@@ -35,7 +35,7 @@ const Login = () => {
                 toast.success("Успешно влизане!")
                 navigate('/');
             })
-            .catch((error) => {handleFetchError(error)});
+            .catch(handleFetchError);
     };
 
     return (

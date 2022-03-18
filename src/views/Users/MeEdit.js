@@ -59,7 +59,7 @@ const MeEdit = () => {
                     navigate('/users/me');
                 }
             })
-            .catch((error) => {handleFetchError(error)})
+            .catch(handleFetchError)
     }
 
     return (

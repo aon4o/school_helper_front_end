@@ -7,7 +7,10 @@ const handleFetchError = (error, redirect = null) => {
             redirect();
         }
     } else {
-        toast.error(error.message);
+        toast.error("Възникна грешка при извличането на информация!");
+        if (redirect !== null) {
+            redirect();
+        }
     }
 
 }

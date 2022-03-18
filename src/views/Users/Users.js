@@ -6,6 +6,7 @@ import {useNavigate} from "react-router";
 import authContext from "../../utils/authContext";
 import Loading from "../../components/Loading";
 import UsersTable from "../../components/UsersTable";
+import handleFetchError from "../../utils/handleFetchError";
 
 const Users = () => {
 
@@ -28,14 +29,7 @@ const Users = () => {
 
         api_get(`/users`, Auth.token)
             .then((response) => {setUsers(response)})
-            .catch((error) => {
-                if (error.detail !== undefined) {
-                    toast.error(error.detail);
-                    navigate('/');
-                } else {
-                    toast.error(error.message);
-                }
-            })
+            .catch(handleFetchError)
             .finally(() => {setLoadingUsers(false)})
     }, [Auth.auth, Auth.token, navigate])
 

@@ -25,7 +25,7 @@ const ClassCreate = () => {
         event.preventDefault();
         api_post("/classes/create", {"name": name}, Auth.token)
             .then(() => {toast.success("Клас '"+name+"' беше добавен успешно!");})
-            .catch((error) => {handleFetchError(error)});
+            .catch(handleFetchError);
     }
 
     return (

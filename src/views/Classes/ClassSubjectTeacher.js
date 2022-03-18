@@ -51,7 +51,7 @@ const ClassSubjectTeacher = () => {
                 toast.success(`Учител за предмет '${classSubject.subject.name}' бе успешно зададен!`);
                 navigate(-1);
             })
-            .catch((error) => handleFetchError(error))
+            .catch(handleFetchError)
     }
 
     const handleRemoveClassSubjectTeacher = () => {
@@ -60,7 +60,7 @@ const ClassSubjectTeacher = () => {
                 toast.success(`Учителят по предмет '${classSubject.subject.name}' бе премахнат успешно!`);
                 navigate(-1);
             })
-            .catch((error) => handleFetchError(error))
+            .catch(handleFetchError)
     }
 
     return (

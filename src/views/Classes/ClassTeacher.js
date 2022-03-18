@@ -44,7 +44,7 @@ const ClassTeacher = () => {
                 setUsers(free_teachers);
 
             })
-            .catch((error) => {handleFetchError(error)})
+            .catch(handleFetchError)
             .finally(() => setLoading(false))
 
     }, [Auth.auth, Auth.token, name, navigate])
@@ -55,7 +55,7 @@ const ClassTeacher = () => {
                 toast.success("Класният ръководител бе успешно зададен!");
                 navigate(-1);
             })
-            .catch((error) => handleFetchError(error))
+            .catch(handleFetchError)
     }
 
     const handleRemoveClassTeacher = () => {
@@ -64,7 +64,7 @@ const ClassTeacher = () => {
                 toast.success("Класният ръководител бе успешно премахнат!");
                 navigate(-1);
             })
-            .catch((error) => handleFetchError(error))
+            .catch(handleFetchError)
     }
 
     return (

@@ -16,7 +16,10 @@ import Classes from "./views/Classes/Classes";
 import ClassCreate from "./views/Classes/ClassCreate";
 import ClassEdit from "./views/Classes/ClassEdit";
 import Class from "./views/Classes/Class";
+import ClassTeacher from "./views/Classes/ClassTeacher";
 import ClassSubjects from "./views/Classes/ClassSubjects";
+import ClassSubject from "./views/Classes/ClassSubject";
+import ClassSubjectTeacher from "./views/Classes/ClassSubjectTeacher";
 
 import Subject from "./views/Subjects/Subject";
 import Subjects from "./views/Subjects/Subjects";
@@ -28,8 +31,7 @@ import Me from "./views/Users/Me";
 import MeEdit from "./views/Users/MeEdit";
 import User from "./views/Users/User";
 import getUserScope from "./utils/getUserScope";
-import ClassTeacher from "./views/Classes/ClassTeacher";
-import ClassSubjectTeacher from "./views/Classes/ClassSubjectTeacher";
+
 
 const App = () => {
     const [auth, setAuth] = useState(false);
@@ -58,9 +60,10 @@ const App = () => {
                             <Route path="create" element={<ClassCreate />} />
                             <Route path=":name" element={<Class />}/>
                             <Route path=":name/edit" element={<ClassEdit/>} />
-                            <Route path=":name/subjects" element={<ClassSubjects/>} />
-                            <Route path=":class_name/subjects/:subject_name/teacher" element={<ClassSubjectTeacher/>} />
                             <Route path=":name/class_teacher" element={<ClassTeacher/>} />
+                            <Route path=":name/subjects" element={<ClassSubjects/>} />
+                            <Route path=":class_name/subjects/:subject_name" element={<ClassSubject/>} />
+                            <Route path=":class_name/subjects/:subject_name/teacher" element={<ClassSubjectTeacher/>} />
                         </Route>
                         <Route path="subjects">
                             <Route index element={<Subjects />}/>

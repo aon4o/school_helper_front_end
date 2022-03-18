@@ -30,7 +30,7 @@ function Register() {
                 toast.success('Регистрацията Ви бе успешна!');
                 navigate('/login')
             })
-            .catch((error) => {handleFetchError(error)});
+            .catch(handleFetchError);
     };
 
     return (

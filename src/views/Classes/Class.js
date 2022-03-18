@@ -38,7 +38,7 @@ const Class = () => {
 
         api_get(`/classes/${name}/subjects`, Auth.token)
             .then((response) => {setClassSubjects(response)})
-            .catch((error) => {handleFetchError(error)})
+            .catch(handleFetchError)
             .finally(() => {setLoadingSubjects(false)})
     }, [Auth.auth, Auth.token, name, navigate])
 
@@ -107,8 +107,8 @@ const Class = () => {
                                                         }
                                                     </td>
                                                     <td>
-                                                        <LinkContainer to={`#`}>
-                                                            <Button disabled variant={"success"} className="m-1">
+                                                        <LinkContainer to={`subjects/${classSubject.subject.name}`}>
+                                                            <Button variant={"success"} className="m-1">
                                                                 <FontAwesomeIcon icon={faExternalLink} />
                                                             </Button>
                                                         </LinkContainer>

@@ -35,12 +35,12 @@ const ClassSubjects = () => {
 
         api_get(`/classes/${name}/subjects`, Auth.token)
             .then((response) => {setClassSubjects(response)})
-            .catch((error) => {handleFetchError(error)})
+            .catch(handleFetchError)
             .finally(() => {setLoadingClassSubjects(false)})
 
         api_get(`/subjects`, Auth.token)
             .then((response) => {setOtherSubjects(response)})
-            .catch((error) => {handleFetchError(error)})
+            .catch(handleFetchError)
             .finally(() => {setLoadingOtherSubjects(false)})
     }, [Auth.auth, Auth.token, name, navigate])
 
@@ -50,7 +50,7 @@ const ClassSubjects = () => {
                 toast.success(`Предмет '${subject.name}' беше успешно добавен на Клас ${class_.name}.`);
                 setClassSubjects([...classSubjects, {subject: subject, teacher: null}]);
             })
-            .catch((error) => {handleFetchError(error)})
+            .catch(handleFetchError)
     }
 
     const removeSubject = (subject) => {
@@ -65,7 +65,7 @@ const ClassSubjects = () => {
                 })
                 setClassSubjects(newClassSubjects);
             })
-            .catch((error) => {handleFetchError(error)})
+            .catch(handleFetchError)
     }
 
     const checkClassHasSubject = (subjects, subject) => {

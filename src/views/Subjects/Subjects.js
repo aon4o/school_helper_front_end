@@ -1,6 +1,6 @@
-import {Button, Col, Container, Row, Table} from "react-bootstrap";
+import {Alert, Button, Col, Container, Row, Table} from "react-bootstrap";
 import {api_delete, api_get} from "../../utils/fetch";
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash, faEdit, faExternalLink} from "@fortawesome/free-solid-svg-icons";
 import {toast} from "react-toastify";
@@ -14,7 +14,7 @@ const Subjects = () => {
 
     document.title = "ELSYS Helper | Предмети";
 
-    const [subjects, setSubjects] = useState([]);
+    const [subjects, setSubjects] = useState(undefined);
     const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
@@ -28,9 +28,7 @@ const Subjects = () => {
 
         api_get("/subjects", Auth.token)
             .then(response => setSubjects(response))
-            .catch((error) => {
-                handleFetchError(error);
-            })
+            .catch(handleFetchError)
             .finally(() => setLoading(false));
     }, [Auth.auth, Auth.token, navigate])
 
@@ -42,7 +40,7 @@ const Subjects = () => {
                 new_list.splice(index, 1);
                 setSubjects(new_list);
             })
-            .catch((error) => {handleFetchError(error)})
+            .catch(handleFetchError)
     }
 
     return (
@@ -58,40 +56,51 @@ const Subjects = () => {
                             </LinkContainer>
                         </div>
 
-                        { subjects.length === 0 ?
+                        { subjects === undefined ?
                             <Loading error={!loading}/>
                             :
-                            <Table striped bordered hover responsive className="mb-5">
-                                <thead>
-                                <tr>
-                                    <th>Предмет</th>
-                                    <th>Действия</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {subjects.map((subject, index) => (
-                                        <tr key={index} className="text-center">
-                                            <td>{subject.name}</td>
-                                            <td>
-                                                <LinkContainer to={`${subject.name}`}>
-                                                    <Button variant={"success"} className="m-1">
-                                                        <FontAwesomeIcon icon={faExternalLink} />
-                                                    </Button>
-                                                </LinkContainer>
-                                                <LinkContainer to={`${subject.name}/edit`}>
-                                                    <Button variant={"warning"} className="m-1">
-                                                        <FontAwesomeIcon icon={faEdit} />
-                                                    </Button>
-                                                </LinkContainer>
-                                                <Button onClick={() => deleteSubject(subject.name, index)} variant={"danger"} className="m-1">
-                                                    <FontAwesomeIcon icon={faTrash} />
-                                                </Button>
-                                            </td>
-                                        </tr>
-                                    )
-                                )}
-                                </tbody>
-                            </Table>
+                            <>
+                                {
+                                    subjects.length === 0 ?
+                                        <Alert variant={'info'}>
+                                            <Alert.Heading className={'text-center my-3'}>
+                                                Няма създадени Предмети!
+                                            </Alert.Heading>
+                                        </Alert>
+                                        :
+                                        <Table striped bordered hover responsive className="mb-5">
+                                            <thead>
+                                            <tr>
+                                                <th>Предмет</th>
+                                                <th>Действия</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {subjects.map((subject, index) => (
+                                                    <tr key={index} className="text-center">
+                                                        <td>{subject.name}</td>
+                                                        <td>
+                                                            <LinkContainer to={`${subject.name}`}>
+                                                                <Button variant={"success"} className="m-1">
+                                                                    <FontAwesomeIcon icon={faExternalLink} />
+                                                                </Button>
+                                                            </LinkContainer>
+                                                            <LinkContainer to={`${subject.name}/edit`}>
+                                                                <Button variant={"warning"} className="m-1">
+                                                                    <FontAwesomeIcon icon={faEdit} />
+                                                                </Button>
+                                                            </LinkContainer>
+                                                            <Button onClick={() => deleteSubject(subject.name, index)} variant={"danger"} className="m-1">
+                                                                <FontAwesomeIcon icon={faTrash} />
+                                                            </Button>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            )}
+                                            </tbody>
+                                        </Table>
+                                }
+                            </>
                         }
                     </Col>
                 </Row>

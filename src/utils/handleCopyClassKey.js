@@ -9,7 +9,7 @@ const handleCopyClassKey = (name, token) => {
                 .then(() => toast.success("Текстът беше копирн успешно!"))
                 .catch(error => toast.error(error))
         })
-        .catch((error) => handleFetchError(error))
+        .catch(handleFetchError)
 }
 
 export default handleCopyClassKey;

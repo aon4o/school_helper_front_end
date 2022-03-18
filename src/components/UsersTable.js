@@ -27,7 +27,7 @@ const UsersTable = (props) => {
                 setAllUsers(new_users);
                 toast.success(`Потребител '${email}' е Потвърден успешно!`);
             })
-            .catch(error => handleFetchError(error))
+            .catch(handleFetchError)
     }
 
     const handleMakeAdmin = (email) => {
@@ -43,7 +43,7 @@ const UsersTable = (props) => {
                 setAllUsers(new_users);
                 toast.success(`Потребител '${email}' вече е Админ!`);
             })
-            .catch(error => handleFetchError(error))
+            .catch(handleFetchError)
 
     }
 
@@ -60,7 +60,7 @@ const UsersTable = (props) => {
                 setAllUsers(new_users);
                 toast.success(`Потребител '${email}' вече е не е Потвърден!`);
             })
-            .catch(error => handleFetchError(error))
+            .catch(handleFetchError)
 
     }
 

@@ -30,7 +30,7 @@ const SubjectEdit = () => {
                 toast.success(`Името на Предмет "${name}" беше променено на "${new_name}" успешно!`);
                 navigate(`/subjects/${new_name}/edit`);
             })
-            .catch((error) => {handleFetchError(error)});
+            .catch(handleFetchError)
     }
 
     // CHECKS IF THE CLASS TO BE EDITED EXISTS
