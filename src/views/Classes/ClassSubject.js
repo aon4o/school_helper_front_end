@@ -21,7 +21,7 @@ const ClassSubject = () => {
 
     const [newMessageTitle, setNewMessageTitle] = useState("");
     const [newMessageText, setNewMessageText] = useState("");
-    const [messageSent, setMessageSent] = useState(1);
+    const [messagesChange, setMessagesChange] = useState(1);
 
     const navigate = useNavigate();
     const Auth = useContext(authContext);
@@ -50,7 +50,7 @@ const ClassSubject = () => {
             .then(response => setMessages(response.reverse()))
             .catch(handleFetchError)
             .finally(() => setLoadingMessages(false))
-    }, [Auth.token, class_name, subject_name, messageSent])
+    }, [Auth.token, class_name, subject_name, messagesChange])
 
     const handleCreateMessage = (e) => {
         e.preventDefault();
@@ -58,7 +58,7 @@ const ClassSubject = () => {
             {"title": newMessageTitle, "text": newMessageText}, Auth.token)
             .then(() => {
                 toast.success("Съобщението бе изпратено успешно!");
-                setMessageSent(messageSent + 1);
+                setMessagesChange(messagesChange + 1);
             })
             .catch(handleFetchError)
     }
@@ -143,7 +143,14 @@ const ClassSubject = () => {
                                         :
                                         <>
                                             {messages.map((message, index) => (
-                                                <MessageCard message={message} key={index}/>
+                                                <MessageCard
+                                                    message={message}
+                                                    key={index}
+                                                    class_name={class_name}
+                                                    subject_name={subject_name}
+                                                    change={messagesChange}
+                                                    setChange={setMessagesChange}
+                                                />
                                             ))}
                                         </>
                                 }</>
