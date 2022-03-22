@@ -1,4 +1,4 @@
-import {Alert, Button, Col, Container, Row, Table} from "react-bootstrap";
+import {Button, Col, Container, Row, Table} from "react-bootstrap";
 import React, {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {api_get} from "../../utils/fetch";
@@ -10,6 +10,7 @@ import {faEdit, faExternalLink} from "@fortawesome/free-solid-svg-icons";
 import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
 import ClassCard from "../../components/ClassCard";
+import InfoAlert from "../../components/InfoAlert";
 
 
 const Class = () => {
@@ -57,13 +58,13 @@ const Class = () => {
 
                     <Col lg={8}>
                         <div className={'d-flex justify-content-end mb-3'}>
-                            <LinkContainer to={`subjects`} className={'me-2'}>
+                            <LinkContainer to={`subjects`} className={'me-2 rounded-mine shadow-mine'}>
                                 <Button variant={'outline-primary'}>Задаване на Предмети</Button>
                             </LinkContainer>
-                            <LinkContainer to={`class_teacher`} className={'me-2'}>
+                            <LinkContainer to={`class_teacher`} className={'me-2 rounded-mine shadow-mine'}>
                                 <Button variant={'outline-primary'}>Задаване на Класен ръководител</Button>
                             </LinkContainer>
-                            <Button variant={'outline-primary'} onClick={() => navigate(-1)}>Назад</Button>
+                            <Button variant={'outline-primary'} className={'rounded-mine shadow-mine'} onClick={() => navigate(-1)}>Назад</Button>
                         </div>
 
                         {
@@ -72,13 +73,9 @@ const Class = () => {
                                 :
                                 <>{
                                     classSubjects.length === 0 ?
-                                        <Alert variant={'info'}>
-                                            <Alert.Heading className={'text-center my-3'}>
-                                                Класът няма зададени предмети!
-                                            </Alert.Heading>
-                                        </Alert>
+                                        <InfoAlert text={'Класът няма зададени предмети!'}/>
                                         :
-                                        <Table striped bordered hover responsive className="mb-5">
+                                        <Table striped borderless hover className="mb-5 rounded-mine shadow-mine">
                                             <thead>
                                             <tr>
                                                 <th>Предмент</th>

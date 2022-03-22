@@ -40,7 +40,7 @@ const Home = () => {
                         <h4>За преглед на Класове, Предмети и Профили може да ползвате Навигацията отгоре.</h4>
                         <h4>За повече информация може да отидете на съответната страница.</h4>
                         <hr className={'my-5'}/>
-                        <Alert variant={alert}>
+                        <Alert variant={alert} className={'rounded-mine shadow-mine'}>
                             <h2>{scopeMessage}</h2>
                         </Alert>
                     </Col>

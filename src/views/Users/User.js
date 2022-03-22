@@ -48,7 +48,10 @@ const User = () => {
                     </Col>
                     <Col lg={8}>
                         <div className={'d-flex justify-content-end mb-3'}>
-                            <Button variant={'outline-primary'} className={'me-2'} onClick={() => navigate(-1)}>Назад</Button>
+                            <Button
+                                variant={'outline-primary'}
+                                className={'me-2 rounded-mine shadow-mine'}
+                                onClick={() => navigate(-1)}>Назад</Button>
                         </div>
 
                     </Col>

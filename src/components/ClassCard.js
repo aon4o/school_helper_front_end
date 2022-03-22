@@ -1,4 +1,4 @@
-import {Alert, Button, Card} from "react-bootstrap";
+import {Alert, Badge, Button, Card} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 import React, {useContext} from "react";
 import handleCopyClassKey from "../utils/handleCopyClassKey";
@@ -10,7 +10,7 @@ const ClassCard = (props) => {
 
     return (
         <>
-            <Card text={'white'} bg={'primary'} className={'border-0'}>
+            <Card text={'white'} bg={'primary'} className={'border-0 shadow-lg-mine rounded-mine'}>
                 <Card.Body>
                     <Card.Title>{class_.name}</Card.Title>
                     <Card.Text>
@@ -27,6 +27,14 @@ const ClassCard = (props) => {
                                 :
                                 <Alert variant={'danger'} className={'text-danger mb-0'}>Няма класен ръководител</Alert>
                         }
+                    </Card.Text>
+                    <Card.Text>
+                        Discord:<span className={'fs-5 ms-2'}>{
+                            class_.guild_id === null ?
+                                <Badge bg={'danger'} pill>Неактивен</Badge>
+                                :
+                                <Badge bg={'success'} pill>Активен</Badge>
+                    }</span>
                     </Card.Text>
                 </Card.Body>
                 <Card.Footer>

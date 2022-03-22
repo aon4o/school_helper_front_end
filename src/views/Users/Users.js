@@ -65,19 +65,19 @@ const Users = () => {
                                 <Tab.Container id="user-tabs" defaultActiveKey="all">
                                     <Nav variant="pills" className="d-flex justify-content-evenly mb-3">
                                         <Nav.Item>
-                                            <Nav.Link eventKey="all">Всички</Nav.Link>
+                                            <Nav.Link as={'button'} eventKey="all" className={'rounded-mine shadow-mine'}>Всички</Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
-                                            <Nav.Link eventKey="admins">Админи</Nav.Link>
+                                            <Nav.Link as={'button'} eventKey="admins" className={'rounded-mine shadow-mine'}>Админи</Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
-                                            <Nav.Link eventKey="users">Потвърдени</Nav.Link>
+                                            <Nav.Link as={'button'} eventKey="users" className={'rounded-mine shadow-mine'}>Потвърдени</Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
-                                            <Nav.Link eventKey="unverified">Непотвърдени</Nav.Link>
+                                            <Nav.Link as={'button'} eventKey="unverified" className={'rounded-mine shadow-mine'}>Непотвърдени</Nav.Link>
                                         </Nav.Item>
                                     </Nav>
-                                    <Tab.Content>
+                                    <Tab.Content className={'mt-4'}>
                                         <Tab.Pane eventKey="all">
                                             <UsersTable users={users} all_users={users} setAllUsers={setUsers}/>
                                         </Tab.Pane>

@@ -1,4 +1,4 @@
-import {Alert, Button, Col, Container, Row, Table} from "react-bootstrap";
+import {Button, Col, Container, Row, Table} from "react-bootstrap";
 import {api_delete, api_get} from "../../utils/fetch";
 import React, {useContext, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -9,6 +9,7 @@ import Loading from "../../components/Loading";
 import {useNavigate} from "react-router";
 import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
+import InfoAlert from "../../components/InfoAlert";
 
 const Subjects = () => {
 
@@ -52,7 +53,7 @@ const Subjects = () => {
 
                         <div className="d-flex justify-content-end mb-3">
                             <LinkContainer to={"/subjects/create"}>
-                                <Button variant="outline-primary">Добави Предмет</Button>
+                                <Button variant="outline-primary" className={'rounded-mine shadow-mine'}>Добави Предмет</Button>
                             </LinkContainer>
                         </div>
 
@@ -62,13 +63,9 @@ const Subjects = () => {
                             <>
                                 {
                                     subjects.length === 0 ?
-                                        <Alert variant={'info'}>
-                                            <Alert.Heading className={'text-center my-3'}>
-                                                Няма създадени Предмети!
-                                            </Alert.Heading>
-                                        </Alert>
+                                        <InfoAlert text={'Няма създадени Предмети!'}/>
                                         :
-                                        <Table striped bordered hover responsive className="mb-5">
+                                        <Table striped borderless hover className="mb-5 shadow-mine rounded-mine">
                                             <thead>
                                             <tr>
                                                 <th>Предмет</th>

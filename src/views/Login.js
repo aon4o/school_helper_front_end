@@ -43,7 +43,7 @@ const Login = () => {
             <Row className="d-flex justify-content-center">
                 <Col md={5}>
                     <h1 className="text-center mb-4">Вход</h1>
-                    <Form onSubmit={handleSubmit} className="border border-3 border-primary rounded-3 p-3">
+                    <Form onSubmit={handleSubmit} className="border border-3 border-primary shadow-lg-mine rounded-mine p-3">
                         <FloatingLabel label="Имейл" className="mb-3">
                             <Form.Control id="inputEmail" className="border-primary" type={'email'} placeholder="name@example.com" value={email}
                                           onChange={(e) => setEmail(e.target.value)}

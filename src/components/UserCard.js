@@ -9,7 +9,7 @@ const UserCard = (props) => {
 
     return (
         <>
-            <Card text={'white'} bg={'primary'} className={'border-0'}>
+            <Card text={'white'} bg={'primary'} className={'border-0 rounded-mine shadow-mine'}>
                 <Card.Header className={'border-light'}>
                     {user.verified ?
                         <>{' '}<Badge pill bg={'primary'}>Потребител</Badge></>

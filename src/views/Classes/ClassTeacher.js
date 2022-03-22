@@ -1,4 +1,4 @@
-import {Alert, Button, Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import React, {useContext, useEffect, useState} from "react";
 import {LinkContainer} from "react-router-bootstrap";
 import {toast} from "react-toastify";
@@ -9,6 +9,7 @@ import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
 import {faX} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import InfoAlert from "../../components/InfoAlert";
 
 
 const ClassTeacher = () => {
@@ -74,7 +75,7 @@ const ClassTeacher = () => {
                     <Col lg={10} className={'mb-4'}>
                         <h1 className="text-center">'{name}' клас</h1>
                         <div className={'d-flex justify-content-end'}>
-                            <Button variant={'outline-primary'} onClick={() => navigate(-1)}>Назад</Button>
+                            <Button variant={'outline-primary rounded-mine shadow-mine'} onClick={() => navigate(-1)}>Назад</Button>
                         </div>
                     </Col>
                     <Col md={12}>
@@ -88,12 +89,13 @@ const ClassTeacher = () => {
                                             class_.class_teacher ?
                                                 <>
                                                     <LinkContainer to={`/users/${class_.class_teacher.email}`}>
-                                                        <Button size={'lg'} variant={'outline-primary'}>
+                                                        <Button size={'lg'} variant={'outline-primary'} className={'rounded-mine'}>
                                                             {class_.class_teacher.first_name} {class_.class_teacher.last_name}
                                                         </Button>
                                                     </LinkContainer>
                                                     {' '}
-                                                    <Button size={'lg'} variant={'outline-danger'} onClick={handleRemoveClassTeacher}>
+                                                    <Button size={'lg'} variant={'outline-danger'}
+                                                            className={'rounded-mine'} onClick={handleRemoveClassTeacher}>
                                                         <FontAwesomeIcon icon={faX} />
                                                     </Button>
                                                 </>
@@ -104,7 +106,7 @@ const ClassTeacher = () => {
                                     <hr/>
                                     {
                                         users.length > 0 ?
-                                            <>
+                                            <div className={'rounded-mine shadow-mine p-4'}>
                                             {
                                                 users.map((user) => (
                                                     <Button variant={'primary'} className={'m-1'} onClick={() => handleSetClassTeacher(user.email)}>
@@ -112,11 +114,9 @@ const ClassTeacher = () => {
                                                     </Button>
                                                 ))
                                             }
-                                            </>
+                                            </div>
                                             :
-                                            <Alert variant={'info'}>
-                                                <h3 className={'text-center mb-0'}>Няма свободни учители!</h3>
-                                            </Alert>
+                                            <InfoAlert text={'Няма свободни учители!'}/>
                                     }
 
 

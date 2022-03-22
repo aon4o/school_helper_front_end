@@ -51,7 +51,7 @@ const ClassEdit = () => {
                         <h1 className="text-center mb-4">Промяна на клас '{name}'</h1>
 
                         <Form onSubmit={handleSubmit}>
-                            <InputGroup className="mb-3">
+                            <InputGroup className="mb-3 shadow-mine">
                                 <FormControl
                                     placeholder="Ново име на Класа"
                                     value={new_name}

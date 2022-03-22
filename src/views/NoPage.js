@@ -8,8 +8,8 @@ const NoPage = () => {
 
     return (
         <>
-            <Alert variant="danger" className={'text-center'}>
-                <Alert.Heading className={'my-5'}>
+            <Alert variant="danger" className={'text-center rounded-mine shadow-mine my-5'}>
+                <Alert.Heading className={'my-3'}>
                     <h1>404 Страницата не е намерена! 404</h1>
                 </Alert.Heading>
                 <hr/>
@@ -25,10 +25,11 @@ const NoPage = () => {
                 </p>
             </Alert>
 
-            <div className={'d-flex'}>
+            <div className={'d-flex justify-content-evenly'}>
                 <Button
                     variant={'outline-primary'}
                     size={'lg'}
+                    className={'rounded-mine shadow-mine'}
                     onClick={() => navigate('/')}
                 >
                     Начало
@@ -36,7 +37,7 @@ const NoPage = () => {
                 <Button
                     variant={'outline-primary'}
                     size={'lg'}
-                    className={'ms-3'}
+                    className={'ms-3 rounded-mine shadow-mine'}
                     onClick={() => navigate(-1)}
                 >
                     Назад

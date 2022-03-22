@@ -1,4 +1,4 @@
-import {Alert, Badge, Button, Table} from "react-bootstrap";
+import {Badge, Button, Table} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLink} from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +9,7 @@ import handleFetchError from "../utils/handleFetchError";
 import authContext from "../utils/authContext";
 import {CopyToClipboard} from "react-copy-to-clipboard/src";
 import handleCopy from "../utils/handleCopy";
+import InfoAlert from "./InfoAlert";
 
 const UsersTable = (props) => {
     const {users, all_users, setAllUsers} = props;
@@ -68,7 +69,7 @@ const UsersTable = (props) => {
         <>
             {
                 users.length > 0 ?
-                    <Table striped bordered hover responsive className="mb-5">
+                    <Table striped borderless hover className="mb-5 shadow-mine rounded-mine">
                         <thead>
                         <tr>
                             <th>Име</th>
@@ -161,9 +162,7 @@ const UsersTable = (props) => {
                         </tbody>
                     </Table>
                     :
-                    <Alert variant={'info'} className={'text-center mt-5'}>
-                        <h1 className={'mb-0'}>Няма Потребители в тази Категория.</h1>
-                    </Alert>
+                    <InfoAlert text={'Няма Потребители в тази Категория.'}/>
             }
 
         </>

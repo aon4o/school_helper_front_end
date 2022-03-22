@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router";
-import {Button, Col, Container, Row, Table} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import {LinkContainer} from 'react-router-bootstrap'
 import {toast} from "react-toastify";
 import {api_delete, api_get} from "../../utils/fetch";
@@ -58,12 +58,12 @@ const Me = () => {
                                 :
                                 <>
                                     <UserCard user={user}/>
-                                    <div className={'mt-2 d-flex justify-content-around'}>
+                                    <div className={'mt-3 d-flex justify-content-around'}>
                                         <LinkContainer to={'edit'}>
-                                            <Button variant={'warning'} className={'flex-fill'}>Промяна</Button>
+                                            <Button variant={'warning'} className={'flex-fill rounded-mine shadow-mine'}>Промяна</Button>
                                         </LinkContainer>
                                         <div className={'mx-1'}/>
-                                        <Button variant={'danger'} className={'flex-fill'} onClick={() => handleDelete()}>Изтриване</Button>
+                                        <Button variant={'danger'} className={'flex-fill rounded-mine shadow-mine'} onClick={() => handleDelete()}>Изтриване</Button>
                                     </div>
                                 </>
                         }

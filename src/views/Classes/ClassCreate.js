@@ -36,7 +36,7 @@ const ClassCreate = () => {
                         <h1 className="text-center mb-4">Нов Клас</h1>
 
                         <Form onSubmit={handleSubmit}>
-                            <InputGroup className="mb-3">
+                            <InputGroup className="mb-3 shadow-mine">
                                 <FormControl
                                     placeholder="Име на Класа"
                                     value={name}
@@ -47,7 +47,7 @@ const ClassCreate = () => {
                         </Form>
 
                         <div className={'d-flex justify-content-center'}>
-                            <Button variant={'outline-primary'} className={'me-2'} onClick={() => navigate(-1)}>Назад</Button>
+                            <Button variant={'outline-primary'} className={'me-2 rounded-mine shadow-mine'} onClick={() => navigate(-1)}>Назад</Button>
                         </div>
                     </Col>
                 </Row>

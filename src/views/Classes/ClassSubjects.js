@@ -1,4 +1,4 @@
-import {Alert, Button, Col, Container, Row, Table} from "react-bootstrap";
+import {Button, Col, Container, Row, Table} from "react-bootstrap";
 import React, {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {api_delete, api_get, api_post} from "../../utils/fetch";
@@ -6,6 +6,7 @@ import {useParams, useNavigate} from "react-router";
 import Loading from "../../components/Loading";
 import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
+import InfoAlert from "../../components/InfoAlert";
 
 
 const ClassSubjects = () => {
@@ -93,7 +94,13 @@ const ClassSubjects = () => {
                     </Col>
                     <Col lg={10}>
                         <div className={'d-flex justify-content-end mb-3'}>
-                            <Button variant={'outline-primary'} onClick={() => navigate(-1)}>Назад</Button>
+                            <Button
+                                variant={'outline-primary'}
+                                onClick={() => navigate(-1)}
+                                className={'shadow-mine rounded-mine'}
+                            >
+                                Назад
+                            </Button>
                         </div>
 
                         {
@@ -102,15 +109,11 @@ const ClassSubjects = () => {
                                 :
                                 <>
                                     {otherSubjects.length === 0 &&
-                                        <Alert variant={'info'}>
-                                            <Alert.Heading className={'text-center my-3'}>
-                                                Няма създадени Предмети!
-                                            </Alert.Heading>
-                                        </Alert>
+                                        <InfoAlert text={'Няма създадени Предмети!'}/>
                                     }
 
                                     {otherSubjects.length !== 0 &&
-                                        <Table striped bordered hover responsive className="mb-5">
+                                        <Table striped borderless hover className="mb-5 shadow-mine rounded-mine">
                                             <thead>
                                             <tr>
                                                 <th>Предмет</th>

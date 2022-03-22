@@ -1,4 +1,4 @@
-import {Alert, Button, Card, Col, Container, FloatingLabel, Form, Row} from "react-bootstrap";
+import {Button, Card, Col, Container, FloatingLabel, Form, Row} from "react-bootstrap";
 import React, {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {api_get, api_post} from "../../utils/fetch";
@@ -7,6 +7,7 @@ import Loading from "../../components/Loading";
 import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
 import MessageCard from "../../components/MessageCard";
+import InfoAlert from "../../components/InfoAlert";
 
 
 const ClassSubject = () => {
@@ -77,7 +78,7 @@ const ClassSubject = () => {
                         {class_ === undefined || classSubject === undefined ?
                             <Loading error={!loadingClass || !loadingClassSubject}/>
                             :
-                            <Card text={'white'} bg={'primary'} className={'border-0'}>
+                            <Card text={'white'} bg={'primary'} className={'border-0 rounded-mine shadow-lg-mine'}>
                                 <Card.Body>
                                     <Card.Text>
                                         Клас - {class_name}
@@ -106,7 +107,7 @@ const ClassSubject = () => {
                             </Card>
                         }
 
-                        <Form onSubmit={handleCreateMessage} className={'mt-4'}>
+                        <Form onSubmit={handleCreateMessage} className={'mt-4 p-2 border border-2 border-primary rounded-mine shadow-lg-mine'}>
                             <FloatingLabel controlId="messageTitle" label="Заглавие">
                                 <Form.Control
                                     type={'title'}
@@ -119,7 +120,7 @@ const ClassSubject = () => {
                                 <Form.Control
                                     as="textarea"
                                     placeholder=" "
-                                    style={{ height: '100px' }}
+                                    style={{ height: '200px' }}
                                     value={newMessageText}
                                     onChange={e => setNewMessageText(e.target.value)}
                                 />
@@ -132,7 +133,10 @@ const ClassSubject = () => {
 
                     <Col lg={8}>
                         <div className={'d-flex justify-content-end mb-3'}>
-                            <Button variant={'outline-primary'} onClick={() => navigate(-1)}>Назад</Button>
+                            <Button
+                                className={'rounded-mine shadow-mine'}
+                                variant={'outline-primary'}
+                                onClick={() => navigate(-1)}>Назад</Button>
                         </div>
 
                         {
@@ -141,11 +145,7 @@ const ClassSubject = () => {
                                 :
                                 <>
                                     {messages.length === 0 &&
-                                        <Alert variant={'info'}>
-                                            <Alert.Heading className={'text-center my-3'}>
-                                                Все още няма Материали и Съобщения за този предмет!
-                                            </Alert.Heading>
-                                        </Alert>
+                                        <InfoAlert text={'Все още няма Материали и Съобщения за този предмет!'}/>
                                     }
                                     {messages.length !== 0 &&
                                         <>{messages.map((message, index) => (

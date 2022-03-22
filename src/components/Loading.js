@@ -5,7 +5,7 @@ const Loading = (props) => {
     return (
         <>
             {props.error ?
-                <Alert variant="danger" className={'text-center my-5'}>
+                <Alert variant="danger" className={'text-center my-5 shadow-mine rounded-mine'}>
                     <Alert.Heading>
                         <h1>Възникна грешка при зареждането!</h1>
                     </Alert.Heading>

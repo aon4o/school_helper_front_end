@@ -1,4 +1,4 @@
-import {Alert, Button, Col, Container, Row, Table} from "react-bootstrap";
+import {Alert, Badge, Button, Col, Container, Row, Table} from "react-bootstrap";
 import {api_delete, api_get} from "../../utils/fetch";
 import React, {useContext, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -53,7 +53,7 @@ const Classes = () => {
 
                         <div className="d-flex justify-content-end mb-3">
                             <LinkContainer to={"/classes/create"}>
-                                <Button variant="outline-primary">Добави Клас</Button>
+                                <Button variant="outline-primary rounded-mine shadow-mine">Добави Клас</Button>
                             </LinkContainer>
                         </div>
 
@@ -69,12 +69,13 @@ const Classes = () => {
                                             </Alert.Heading>
                                         </Alert>
                                         :
-                                        <Table striped bordered hover responsive className="mb-5">
+                                        <Table striped borderless hover className="mb-5 rounded-mine shadow-mine">
                                             <thead>
                                             <tr>
                                                 <th>Клас</th>
                                                 <th>Класен Ръководител</th>
                                                 <th>Ключ</th>
+                                                <th>Discord</th>
                                                 <th>Действия</th>
                                             </tr>
                                             </thead>
@@ -100,6 +101,14 @@ const Classes = () => {
                                                             <Button variant={'outline-primary'} onClick={() => handleCopyClassKey(class_.name, Auth.token)}>
                                                                 Копиране на Ключа
                                                             </Button>
+                                                        </td>
+                                                        <td>
+                                                            <h4>{
+                                                                class_.guild_id === null ?
+                                                                    <Badge bg={'danger'} pill>Неактивен</Badge>
+                                                                    :
+                                                                    <Badge bg={'success'} pill>Активен</Badge>
+                                                            }</h4>
                                                         </td>
                                                         <td>
                                                             <LinkContainer to={`${class_.name}`}>

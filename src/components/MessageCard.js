@@ -26,11 +26,11 @@ const MessageCard = (props) => {
 
     return (
         <>
-            <Card text={'white'} bg={'primary'} className={'border-0 mb-3'}>
+            <Card text={'white'} bg={'primary'} className={'border-0 mb-4 rounded-mine shadow-lg-mine'}>
                 <Card.Body>
                     <Card.Title>
                         {message.title}
-                        <Button onClick={handleDelete} disabled variant={"danger"} size={'sm'} className={"float-end"}>
+                        <Button onClick={handleDelete} disabled variant={"danger"} size={'sm'} className={"float-end rounded-pill"}>
                             <FontAwesomeIcon icon={faTrash} />
                         </Button>
                     </Card.Title>
@@ -39,8 +39,8 @@ const MessageCard = (props) => {
                     </Card.Text>
                 </Card.Body>
                 <Card.Footer className={'d-flex justify-content-between'}>
-                    <Badge bg="danger">{message.user.first_name} {message.user.last_name}</Badge>{' '}
-                    <Badge bg="secondary">{message.created_at}</Badge>
+                    <Badge bg="danger" pill>{message.user.first_name} {message.user.last_name}</Badge>{' '}
+                    <Badge bg="secondary" pill>{message.created_at}</Badge>
                 </Card.Footer>
             </Card>
         </>

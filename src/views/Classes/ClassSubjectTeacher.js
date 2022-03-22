@@ -100,7 +100,7 @@ const ClassSubjectTeacher = () => {
                                     <hr/>
                                     {
                                         users.length > 0 ?
-                                            <>
+                                            <div className={'rounded-mine shadow-mine p-4'}>
                                             {
                                                 users.map((user) => (
                                                     <Button variant={'primary'} className={'m-1'} onClick={() => handleSetClassSubjectTeacher(user.email)}>
@@ -108,7 +108,7 @@ const ClassSubjectTeacher = () => {
                                                     </Button>
                                                 ))
                                             }
-                                            </>
+                                            </div>
                                             :
                                             <Alert variant={'info'}>
                                                 <h3 className={'text-center mb-0'}>Няма свободни учители!</h3>
