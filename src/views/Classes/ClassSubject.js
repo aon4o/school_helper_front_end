@@ -15,9 +15,11 @@ const ClassSubject = () => {
     const [ class_, setClass ] = useState(undefined);
     const [ classSubject, setClassSubject ] = useState(undefined);
     const [ messages, setMessages ] = useState(undefined);
+
     const [ loadingClass, setLoadingClass ] = useState(true);
     const [ loadingClassSubject, setLoadingClassSubject ] = useState(true);
     const [ loadingMessages, setLoadingMessages ] = useState(true);
+    const [ waitingFetch , setWaitingFetch ] = useState(false);
 
     const [newMessageTitle, setNewMessageTitle] = useState("");
     const [newMessageText, setNewMessageText] = useState("");
@@ -49,11 +51,15 @@ const ClassSubject = () => {
         api_get(`/classes/${class_name}/subjects/${subject_name}/messages`, Auth.token)
             .then(response => setMessages(response.reverse()))
             .catch(handleFetchError)
-            .finally(() => setLoadingMessages(false))
+            .finally(() => {
+                setLoadingMessages(false);
+                setWaitingFetch(false);
+            })
     }, [Auth.token, class_name, subject_name, messagesChange])
 
     const handleCreateMessage = (e) => {
         e.preventDefault();
+        setWaitingFetch(true);
         api_post(`/classes/${class_name}/subjects/${subject_name}/messages/create`,
             {"title": newMessageTitle, "text": newMessageText}, Auth.token)
             .then(() => {
@@ -130,33 +136,31 @@ const ClassSubject = () => {
                         </div>
 
                         {
-                            messages === undefined ?
-                                <Loading error={!loadingMessages}/>
+                            messages === undefined || waitingFetch ?
+                                <Loading error={!loadingMessages && !waitingFetch}/>
                                 :
-                                <>{
-                                    messages.length === 0 ?
+                                <>
+                                    {messages.length === 0 &&
                                         <Alert variant={'info'}>
                                             <Alert.Heading className={'text-center my-3'}>
                                                 Все още няма Материали и Съобщения за този предмет!
                                             </Alert.Heading>
                                         </Alert>
-                                        :
-                                        <>
-                                            {messages.map((message, index) => (
-                                                <MessageCard
-                                                    message={message}
-                                                    key={index}
-                                                    class_name={class_name}
-                                                    subject_name={subject_name}
-                                                    change={messagesChange}
-                                                    setChange={setMessagesChange}
-                                                />
-                                            ))}
-                                        </>
-                                }</>
+                                    }
+                                    {messages.length !== 0 &&
+                                        <>{messages.map((message, index) => (
+                                            <MessageCard
+                                                message={message}
+                                                key={index}
+                                                class_name={class_name}
+                                                subject_name={subject_name}
+                                                change={messagesChange}
+                                                setChange={setMessagesChange}
+                                            />
+                                        ))}</>
+                                    }
+                                </>
                         }
-
-
                     </Col>
                 </Row>
             </Container>

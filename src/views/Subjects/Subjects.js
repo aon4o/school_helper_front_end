@@ -81,7 +81,7 @@ const Subjects = () => {
                                                         <td>{subject.name}</td>
                                                         <td>
                                                             <LinkContainer to={`${subject.name}`}>
-                                                                <Button variant={"success"} className="m-1">
+                                                                <Button disabled variant={"success"} className="m-1">
                                                                     <FontAwesomeIcon icon={faExternalLink} />
                                                                 </Button>
                                                             </LinkContainer>

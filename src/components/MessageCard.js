@@ -30,7 +30,7 @@ const MessageCard = (props) => {
                 <Card.Body>
                     <Card.Title>
                         {message.title}
-                        <Button onClick={handleDelete} variant={"danger"} size={'sm'} className={"float-end"}>
+                        <Button onClick={handleDelete} disabled variant={"danger"} size={'sm'} className={"float-end"}>
                             <FontAwesomeIcon icon={faTrash} />
                         </Button>
                     </Card.Title>
