@@ -69,7 +69,10 @@ const ClassSubject = () => {
                 toast.success("Съобщението бе изпратено успешно!");
                 setMessagesChange(messagesChange + 1);
             })
-            .catch(handleFetchError)
+            .catch(error => {
+                handleFetchError(error);
+                setWaitingFetch(false);
+            })
     }
 
     return (
@@ -128,7 +131,7 @@ const ClassSubject = () => {
                                         onChange={e => setNewMessageText(e.target.value)}
                                     />
                                 </FloatingLabel>
-                                <Button variant="primary" type="submit" className={'mt-3'}>
+                                <Button variant="primary" type="submit" className={'mt-3'} disabled={waitingFetch}>
                                     Изпрати
                                 </Button>
                             </Form>
