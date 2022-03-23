@@ -30,26 +30,27 @@ const SubjectCreate = () => {
 
     return (
         <>
-            <Container className={'small-component-margin'}>
+            <Container>
                 <Row className={'justify-content-center'}>
-                    <Col lg={'6'}>
-                        <h1 className="text-center mb-4">Нов Предмет</h1>
+                    <Col lg={6} className={'mt-5'}>
+                        <h1 className="text-center mt-5">Нов Предмет</h1>
 
-                        <Form onSubmit={handleSubmit}>
-                            <InputGroup className="mb-3 shadow-mine">
+                        <Form onSubmit={handleSubmit} className={'mt-5'}>
+                            <InputGroup className="mb-3 shadow-mine rounded-mine">
                                 <FormControl
                                     placeholder="Име на Предмета"
                                     value={name}
+                                    className={'rounded-left'}
                                     onChange={(e) => setName(e.target.value)}
                                 />
-                                <Button type="submit" variant="primary">Създай</Button>
+                                <Button type="submit" className={'rounded-right'} variant="primary">Създай</Button>
                             </InputGroup>
                         </Form>
 
-                        <div className={'d-flex justify-content-center'}>
+                        <div className={'d-flex justify-content-center mt-5'}>
                             <Button
                                 variant={'outline-primary'}
-                                className={'me-2 rounded-mine shadow-mine'}
+                                className={'rounded-mine shadow-mine'}
                                 onClick={() => navigate(-1)}>Назад</Button>
                         </div>
                     </Col>

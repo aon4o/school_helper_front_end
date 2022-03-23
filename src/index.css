@@ -46,3 +46,13 @@ footer {
 .rounded-mine {
   border-radius: 15px !important;
 }
+
+.rounded-left {
+  border-bottom-left-radius: 15px !important;
+  border-top-left-radius: 15px !important;
+}
+
+.rounded-right {
+  border-bottom-right-radius: 15px !important;
+  border-top-right-radius: 15px !important;
+}

@@ -45,22 +45,26 @@ const SubjectEdit = () => {
 
     return (
         <>
-            <Container className={'small-component-margin'}>
+            <Container>
                 <Row className={'justify-content-center'}>
-                    <Col lg={'6'}>
-                        <h1 className="text-center mb-4">Промяна на Предмет '{name}'</h1>
+                    <Col lg={6} className={'mt-5'}>
+                        <h1 className="text-center mt-5">Промяна на Предмет '{name}'</h1>
 
-                        <Form onSubmit={handleSubmit}>
-                            <InputGroup className="mb-3 shadow-mine">
+                        <Form onSubmit={handleSubmit} className={'mt-5'}>
+                            <InputGroup className="shadow-mine rounded-mine">
                                 <FormControl
                                     placeholder="Ново име на Класа"
                                     value={new_name}
+                                    className={'rounded-left'}
                                     onChange={(e) => setNewName(e.target.value)}
                                 />
-                                <Button type="submit" variant="primary">Запази</Button>
+                                <Button type="submit" className={'rounded-right'} variant="primary">Запази</Button>
                             </InputGroup>
                         </Form>
 
+                        <div className={'d-flex justify-content-center mt-5'}>
+                            <Button variant={'outline-primary'} className={'rounded-mine shadow-mine'} onClick={() => navigate(-1)}>Назад</Button>
+                        </div>
                     </Col>
                 </Row>
             </Container>
