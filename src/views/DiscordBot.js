@@ -4,7 +4,6 @@ import {api_get} from "../utils/fetch";
 import authContext from "../utils/authContext";
 import handleFetchError from "../utils/handleFetchError";
 import Loading from "../components/Loading";
-import {Link} from "react-router-dom";
 import {CopyToClipboard} from "react-copy-to-clipboard/src";
 import handleCopy from "../utils/handleCopy";
 
@@ -79,12 +78,12 @@ const DiscordBot = () => {
                 </Col>
 
                 <Col md={12} className={'d-flex justify-content-center mt-5'}>
-                    <Link
-                        to={process.env.REACT_APP_BOT_INVITE_LINK}
+                    <a
+                        href={process.env.REACT_APP_BOT_INVITE_LINK}
                         target={'_blank'} rel="noreferrer"
                     >
                         <Button className={'rounded-mine shadow-mine'}>Линк за покана на Бота</Button>
-                    </Link>
+                    </a>
                     <CopyToClipboard text={process.env.REACT_APP_BOT_INVITE_LINK} onCopy={handleCopy}>
                         <Button className={'rounded-mine shadow-mine ms-2'}>Копиране на Линка за покана на Бота</Button>
                     </CopyToClipboard>
