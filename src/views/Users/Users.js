@@ -5,8 +5,9 @@ import {api_get} from "../../utils/fetch";
 import {useNavigate} from "react-router";
 import authContext from "../../utils/authContext";
 import Loading from "../../components/Loading";
-import UsersTable from "../../components/UsersTable";
+import UsersTable from "../../components/User/UsersTable";
 import handleFetchError from "../../utils/handleFetchError";
+import Title from "../../components/Title";
 
 const Users = () => {
 
@@ -56,8 +57,7 @@ const Users = () => {
             <Container>
                 <Row>
                     <Col>
-                        <h1 className="text-center mb-4">Потребители</h1>
-
+                        <Title text={`Потребители`} className={'mb-4'}/>
                         { users.length === 0 ?
                             <Loading error={!loadingUsers}/>
                             :

@@ -1,6 +1,6 @@
 import {Badge, Button, Card} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
-import handleCopy from "../utils/handleCopy";
+import handleCopy from "../../utils/handleCopy";
 import React from "react";
 import {CopyToClipboard} from "react-copy-to-clipboard/src";
 

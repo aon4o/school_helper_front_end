@@ -1,4 +1,5 @@
 import {Col, Row} from "react-bootstrap";
+import Title from "../components/Title";
 
 const Instructions = () => {
 
@@ -7,9 +8,7 @@ const Instructions = () => {
     return (
         <>
             <Row className="d-flex justify-content-center">
-                <Col md={12}>
-                    <h1 className="text-center mb-4">Инструкции</h1>
-                </Col>
+                <Title text={'Инструкции'} className={'mb-4'}/>
                 <Col className={'d-flex justify-content-center mt-5'}/>
             </Row>
         </>

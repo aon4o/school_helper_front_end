@@ -1,8 +1,8 @@
 import {Alert, Badge, Button, Card} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 import React, {useContext} from "react";
-import handleCopyClassKey from "../utils/handleCopyClassKey";
-import authContext from "../utils/authContext";
+import handleCopyClassKey from "../../utils/handleCopyClassKey";
+import authContext from "../../utils/authContext";
 
 const ClassCard = (props) => {
     const class_ = props.class_;

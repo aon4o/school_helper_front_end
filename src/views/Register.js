@@ -4,6 +4,7 @@ import {Button, Col, FloatingLabel, Form, Row} from "react-bootstrap";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router";
 import handleFetchError from "../utils/handleFetchError";
+import Title from "../components/Title";
 
 function Register() {
     document.title = "ELSYS Helper | Регистрация";
@@ -37,7 +38,7 @@ function Register() {
         <>
             <Row className="d-flex justify-content-center">
                 <Col md={5}>
-                    <h1 className="text-center mb-4">Регистрация</h1>
+                    <Title text={'Регистрация'} className={'mb-4'}/>
                     <Form onSubmit={handleSubmit} className="border border-3 border-primary shadow-lg-mine rounded-mine p-3">
                         <FloatingLabel label="Име" className="mb-3">
                             <Form.Control id="inputFirstName" className="border-primary"

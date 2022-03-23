@@ -7,7 +7,8 @@ import Loading from "../../components/Loading";
 import authContext from "../../utils/authContext";
 import {useNavigate} from "react-router";
 import handleFetchError from "../../utils/handleFetchError";
-import ClassesTable from "../../components/ClassesTable";
+import ClassesTable from "../../components/Class/ClassesTable";
+import Title from "../../components/Title";
 
 
 const Classes = () => {
@@ -36,7 +37,7 @@ const Classes = () => {
             <Container>
                 <Row>
                     <Col>
-                        <h1 className="text-center mb-4">Класове</h1>
+                        <Title text={'Класове'} className={'mb-4'}/>
 
                         <div className="d-flex justify-content-end mb-3">
                             <LinkContainer to={"/classes/create"}>

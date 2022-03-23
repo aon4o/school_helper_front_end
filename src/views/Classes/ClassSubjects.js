@@ -7,6 +7,7 @@ import Loading from "../../components/Loading";
 import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
 import InfoAlert from "../../components/InfoAlert";
+import Title from "../../components/Title";
 
 
 const ClassSubjects = () => {
@@ -89,9 +90,7 @@ const ClassSubjects = () => {
         <>
             <Container>
                 <Row className={'justify-content-center'}>
-                    <Col lg={6}>
-                        <h1 className="text-center mb-5">'{name}' клас - Предмети</h1>
-                    </Col>
+                    <Title text={`'${name}' клас - Предмети`} className={'mb-4'}/>
                     <Col lg={10}>
                         <div className={'d-flex justify-content-end mb-3'}>
                             <Button

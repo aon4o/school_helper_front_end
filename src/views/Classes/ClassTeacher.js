@@ -10,6 +10,7 @@ import handleFetchError from "../../utils/handleFetchError";
 import {faX} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import InfoAlert from "../../components/InfoAlert";
+import Title from "../../components/Title";
 
 
 const ClassTeacher = () => {
@@ -73,7 +74,7 @@ const ClassTeacher = () => {
             <Container>
                 <Row className={'justify-content-center'}>
                     <Col lg={10} className={'mb-4'}>
-                        <h1 className="text-center">'{name}' клас</h1>
+                        <Title text={`'${name}' клас`}/>
                         <div className={'d-flex justify-content-end'}>
                             <Button variant={'outline-primary rounded-mine shadow-mine'} onClick={() => navigate(-1)}>Назад</Button>
                         </div>

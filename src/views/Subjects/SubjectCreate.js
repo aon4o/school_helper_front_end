@@ -5,6 +5,7 @@ import {api_post} from "../../utils/fetch";
 import {useNavigate} from "react-router";
 import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
+import Title from "../../components/Title";
 
 const SubjectCreate = () => {
 
@@ -33,7 +34,7 @@ const SubjectCreate = () => {
             <Container>
                 <Row className={'justify-content-center'}>
                     <Col lg={6} className={'mt-5'}>
-                        <h1 className="text-center mt-5">Нов Предмет</h1>
+                        <Title text={`Нов Предмет`} className="mt-5"/>
 
                         <Form onSubmit={handleSubmit} className={'mt-5'}>
                             <InputGroup className="mb-3 shadow-mine rounded-mine">

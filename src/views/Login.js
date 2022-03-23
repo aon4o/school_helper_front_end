@@ -7,6 +7,7 @@ import authContext from "../utils/authContext";
 import {toast} from "react-toastify";
 import handleFetchError from "../utils/handleFetchError";
 import getUserScope from "../utils/getUserScope";
+import Title from "../components/Title";
 
 const Login = () => {
     document.title = "ELSYS Helper | Вход";
@@ -42,7 +43,7 @@ const Login = () => {
         <>
             <Row className="d-flex justify-content-center">
                 <Col md={5}>
-                    <h1 className="text-center mb-4">Вход</h1>
+                    <Title text={'Вход'} className={'mb-4'}/>
                     <Form onSubmit={handleSubmit} className="border border-3 border-primary shadow-lg-mine rounded-mine p-3">
                         <FloatingLabel label="Имейл" className="mb-3">
                             <Form.Control id="inputEmail" className="border-primary" type={'email'} placeholder="name@example.com" value={email}

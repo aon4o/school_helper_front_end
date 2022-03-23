@@ -1,6 +1,7 @@
 import {useContext, useEffect, useState} from "react";
 import authContext from "../utils/authContext";
 import {Alert, Col, Container, Row} from "react-bootstrap";
+import Title from "../components/Title";
 
 const Home = () => {
 
@@ -34,8 +35,8 @@ const Home = () => {
         <>
             <Container>
                 <Row>
+                    <Title text={'ELSYS Helper | Начало'}/>
                     <Col className={'text-center'}>
-                        <h1>ELSYS Helper | Начало</h1>
                         <hr className={'my-5'}/>
                         <h4>За преглед на Класове, Предмети и Профили може да ползвате Навигацията отгоре.</h4>
                         <h4>За повече информация може да отидете на съответната страница.</h4>

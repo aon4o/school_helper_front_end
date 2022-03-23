@@ -3,13 +3,13 @@ import {LinkContainer} from "react-router-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLink} from "@fortawesome/free-solid-svg-icons";
 import React, {useContext} from "react";
-import {api_put} from "../utils/fetch";
+import {api_put} from "../../utils/fetch";
 import {toast} from "react-toastify";
-import handleFetchError from "../utils/handleFetchError";
-import authContext from "../utils/authContext";
+import handleFetchError from "../../utils/handleFetchError";
+import authContext from "../../utils/authContext";
 import {CopyToClipboard} from "react-copy-to-clipboard/src";
-import handleCopy from "../utils/handleCopy";
-import InfoAlert from "./InfoAlert";
+import handleCopy from "../../utils/handleCopy";
+import InfoAlert from "../InfoAlert";
 
 const UsersTable = (props) => {
     const {users, all_users, setAllUsers} = props;

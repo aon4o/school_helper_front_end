@@ -5,6 +5,7 @@ import {api_get, api_put} from "../../utils/fetch";
 import {useParams, useNavigate} from "react-router";
 import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
+import Title from "../../components/Title";
 
 const SubjectEdit = () => {
 
@@ -48,7 +49,7 @@ const SubjectEdit = () => {
             <Container>
                 <Row className={'justify-content-center'}>
                     <Col lg={6} className={'mt-5'}>
-                        <h1 className="text-center mt-5">Промяна на Предмет '{name}'</h1>
+                        <Title text={`Промяна на Предмет '${name}'`} className="mt-5"/>
 
                         <Form onSubmit={handleSubmit} className={'mt-5'}>
                             <InputGroup className="shadow-mine rounded-mine">

@@ -7,6 +7,7 @@ import authContext from "../../utils/authContext";
 import Loading from "../../components/Loading";
 import handleLogout from "../../utils/handleLogout";
 import handleFetchError from "../../utils/handleFetchError";
+import Title from "../../components/Title";
 
 
 const MeEdit = () => {
@@ -66,9 +67,7 @@ const MeEdit = () => {
         <>
             <Container>
                 <Row className={'justify-content-center'}>
-                    <Col lg={12} className={'text-center'}>
-                        <h1 className={'mb-4'}>Моят Профил | Настройки</h1>
-                    </Col>
+                    <Title text={`Моят Профил | Настройки`} className={'mb-4'}/>
                     <Col md={5}>
                         {
                             Object.keys(user).length === 0

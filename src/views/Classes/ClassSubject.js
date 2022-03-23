@@ -1,12 +1,12 @@
-import {Button, Card, Col, Container, FloatingLabel, Form, Row} from "react-bootstrap";
+import {Button, Card, Col, FloatingLabel, Form, Row} from "react-bootstrap";
 import React, {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {api_get, api_post} from "../../utils/fetch";
-import {useParams, useNavigate} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import Loading from "../../components/Loading";
 import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
-import MessageCard from "../../components/MessageCard";
+import MessageCard from "../../components/Message/MessageCard";
 import InfoAlert from "../../components/InfoAlert";
 import Sticky from 'react-sticky-el';
 import sidebarStickyStyle from '../../utils/sidebarStickyStyle';
@@ -77,8 +77,7 @@ const ClassSubject = () => {
 
     return (
         <>
-            <Container>
-                <Row>
+            <Row>
 
                     <Col lg={4}>
                         <Sticky stickyStyle={sidebarStickyStyle}>
@@ -170,7 +169,6 @@ const ClassSubject = () => {
                         }
                     </Col>
                 </Row>
-            </Container>
         </>
     );
 };

@@ -6,12 +6,13 @@ import {toast} from "react-toastify";
 import {api_delete, api_get} from "../../utils/fetch";
 import authContext from "../../utils/authContext";
 import Loading from "../../components/Loading";
-import UserCard from "../../components/UserCard";
+import UserCard from "../../components/User/UserCard";
 import handleLogout from "../../utils/handleLogout";
 import handleFetchError from "../../utils/handleFetchError";
 import Sticky from 'react-sticky-el';
 import sidebarStickyStyle from '../../utils/sidebarStickyStyle';
-import ClassesTable from "../../components/ClassesTable";
+import ClassesTable from "../../components/Class/ClassesTable";
+import Title from "../../components/Title";
 
 
 const Me = () => {
@@ -61,9 +62,8 @@ const Me = () => {
         <>
             <Container>
                 <Row>
-                    <Col lg={12} md={12} className={'text-center'}>
-                        <h1>Моят Профил</h1>
-                    </Col>
+                    <Title text={`Моят Профил`}/>
+
                     <Col lg={4} className={'justify-content-center mt-4'}>
                         <Sticky stickyStyle={sidebarStickyStyle}>
                             {

@@ -6,6 +6,7 @@ import handleFetchError from "../utils/handleFetchError";
 import Loading from "../components/Loading";
 import {CopyToClipboard} from "react-copy-to-clipboard/src";
 import handleCopy from "../utils/handleCopy";
+import Title from "../components/Title";
 
 const DiscordBot = () => {
 
@@ -31,10 +32,7 @@ const DiscordBot = () => {
     return (
         <>
             <Row className="d-flex justify-content-center">
-                <Col md={12}>
-                    <h1 className="text-center mb-4">ELSYS HELPER BOT</h1>
-                </Col>
-
+                <Title text={'ELSYS HELPER BOT'} className={'mb-4'}/>
                 <Col md={12} className={'d-flex justify-content-center mt-5'}>
                     {
                         loading ?

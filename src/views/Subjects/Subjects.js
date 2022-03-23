@@ -10,6 +10,7 @@ import {useNavigate} from "react-router";
 import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
 import InfoAlert from "../../components/InfoAlert";
+import Title from "../../components/Title";
 
 const Subjects = () => {
 
@@ -49,7 +50,7 @@ const Subjects = () => {
             <Container>
                 <Row>
                     <Col>
-                        <h1 className="text-center mb-4">Предмети</h1>
+                        <Title text={`Предмети`} className={'mb-4'}/>
 
                         <div className="d-flex justify-content-end mb-3">
                             <LinkContainer to={"/subjects/create"}>

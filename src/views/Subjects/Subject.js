@@ -39,7 +39,6 @@ const Subject = () => {
                     <Col lg={4}>
 
                         <Card border={'primary'}>
-                            {/*<Card.Header>Featured</Card.Header>*/}
                             <Card.Body>
                                 <Card.Title>{subject === undefined ? 'Име на Предмета' : subject.name}</Card.Title>
                                 <Card.Text>

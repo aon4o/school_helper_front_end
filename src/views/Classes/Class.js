@@ -9,7 +9,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faExternalLink} from "@fortawesome/free-solid-svg-icons";
 import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
-import ClassCard from "../../components/ClassCard";
+import ClassCard from "../../components/Class/ClassCard";
 import InfoAlert from "../../components/InfoAlert";
 import Sticky from 'react-sticky-el';
 import sidebarStickyStyle from '../../utils/sidebarStickyStyle';

@@ -2,10 +2,10 @@ import {Badge, Button, Card} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import React, {useContext} from "react";
-import authContext from "../utils/authContext";
-import {api_delete} from "../utils/fetch";
+import authContext from "../../utils/authContext";
+import {api_delete} from "../../utils/fetch";
 import {toast} from "react-toastify";
-import handleFetchError from "../utils/handleFetchError";
+import handleFetchError from "../../utils/handleFetchError";
 
 const MessageCard = (props) => {
     const message = props.message;

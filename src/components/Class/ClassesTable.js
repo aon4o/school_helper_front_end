@@ -3,12 +3,12 @@ import {LinkContainer} from "react-router-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faExternalLink, faTrash} from "@fortawesome/free-solid-svg-icons";
 import React, {useContext} from "react";
-import {api_delete} from "../utils/fetch";
+import {api_delete} from "../../utils/fetch";
 import {toast} from "react-toastify";
-import handleFetchError from "../utils/handleFetchError";
-import authContext from "../utils/authContext";
-import handleCopyClassKey from "../utils/handleCopyClassKey";
-import InfoAlert from "./InfoAlert";
+import handleFetchError from "../../utils/handleFetchError";
+import authContext from "../../utils/authContext";
+import handleCopyClassKey from "../../utils/handleCopyClassKey";
+import InfoAlert from "../InfoAlert";
 
 const ClassesTable = (props) => {
     const {classes, setClasses, alert, simple} = props;
