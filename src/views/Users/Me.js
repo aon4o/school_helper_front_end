@@ -11,12 +11,15 @@ import handleLogout from "../../utils/handleLogout";
 import handleFetchError from "../../utils/handleFetchError";
 import Sticky from 'react-sticky-el';
 import sidebarStickyStyle from '../../utils/sidebarStickyStyle';
+import ClassesTable from "../../components/ClassesTable";
 
 
 const Me = () => {
 
     const [ user, setUser ] = useState(undefined);
+    const [ classes, setClasses ] = useState(undefined);
     const [ loadingUser, setLoadingUser ] = useState(true);
+    const [ loadingClasses, setLoadingClasses ] = useState(true);
 
     const navigate = useNavigate();
     const Auth = useContext(authContext);
@@ -31,10 +34,19 @@ const Me = () => {
         }
 
         api_get(`/users/me`, Auth.token)
-            .then((response) => {setUser(response)})
+            .then(response => setUser(response))
             .catch(handleFetchError)
             .finally(() => {setLoadingUser(false)})
     }, [Auth.auth, Auth.token, navigate])
+
+    useEffect(() => {
+        if (user !== undefined) {
+            api_get(`/users/${user.email}/classes`, Auth.token)
+                .then(response => setClasses(response.classes))
+                .catch(handleFetchError)
+                .finally(() => setLoadingClasses(false))
+        }
+    }, [Auth.token, user])
 
     const handleDelete = () => {
         api_delete(`/users/me/delete`, null, Auth.token)
@@ -71,6 +83,25 @@ const Me = () => {
                                     </>
                             }
                         </Sticky>
+                    </Col>
+                    <Col lg={8}>
+                        <div className={'d-flex justify-content-end mt-4 mb-3'}>
+                            <Button
+                                className={'rounded-mine shadow-mine'}
+                                variant={'outline-primary'}
+                                onClick={() => navigate(-1)}>Назад</Button>
+                        </div>
+                        {
+                            classes === undefined ?
+                                <Loading error={!loadingClasses}/>
+                                :
+                                <ClassesTable
+                                    classes={classes}
+                                    setClasses={setClasses}
+                                    alert={'Учителят не преподава на никой Клас!'}
+                                    simple={true}
+                                />
+                        }
                     </Col>
                 </Row>
             </Container>
