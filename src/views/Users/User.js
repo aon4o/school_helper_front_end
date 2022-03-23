@@ -8,6 +8,8 @@ import authContext from "../../utils/authContext";
 import Loading from "../../components/Loading";
 import UserCard from "../../components/UserCard";
 import handleFetchError from "../../utils/handleFetchError";
+import Sticky from 'react-sticky-el';
+import sidebarStickyStyle from '../../utils/sidebarStickyStyle';
 
 
 const User = () => {
@@ -38,13 +40,15 @@ const User = () => {
             <Container>
                 <Row>
                     <Col lg={4} className={'justify-content-center'}>
-                        {
-                            user === undefined
-                                ?
-                                <Loading error={!loadingUser}/>
-                                :
-                                <UserCard user={user}/>
-                        }
+                        <Sticky stickyStyle={sidebarStickyStyle}>
+                            {
+                                user === undefined
+                                    ?
+                                    <Loading error={!loadingUser}/>
+                                    :
+                                    <UserCard user={user}/>
+                            }
+                        </Sticky>
                     </Col>
                     <Col lg={8}>
                         <div className={'d-flex justify-content-end mb-3'}>

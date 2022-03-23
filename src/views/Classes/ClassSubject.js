@@ -8,6 +8,8 @@ import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
 import MessageCard from "../../components/MessageCard";
 import InfoAlert from "../../components/InfoAlert";
+import Sticky from 'react-sticky-el';
+import sidebarStickyStyle from '../../utils/sidebarStickyStyle';
 
 
 const ClassSubject = () => {
@@ -74,61 +76,63 @@ const ClassSubject = () => {
         <>
             <Container>
                 <Row>
-                    <Col lg={4}>
-                        {class_ === undefined || classSubject === undefined ?
-                            <Loading error={!loadingClass || !loadingClassSubject}/>
-                            :
-                            <Card text={'white'} bg={'primary'} className={'border-0 rounded-mine shadow-lg-mine'}>
-                                <Card.Body>
-                                    <Card.Text>
-                                        Клас - {class_name}
-                                        <br/>
-                                        Класен -
-                                        {
-                                            class_ && class_.class_teacher !== null ?
-                                                <>{' '}{class_.class_teacher.first_name}{' '}{class_.class_teacher.last_name}</>
-                                                :
-                                                <>{' '}Няма</>
-                                        }
-                                    </Card.Text>
-                                    <hr/>
-                                    <Card.Text>
-                                        Предмет - {subject_name}
-                                        <br/>
-                                        Преподавател -
-                                        {
-                                            classSubject.teacher !== null ?
-                                                <>{' '}{classSubject.teacher.first_name}{' '}{classSubject.teacher.last_name}</>
-                                                :
-                                                <>{' '}Няма</>
-                                        }
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        }
 
-                        <Form onSubmit={handleCreateMessage} className={'mt-4 p-2 border border-2 border-primary rounded-mine shadow-lg-mine'}>
-                            <FloatingLabel controlId="messageTitle" label="Заглавие">
-                                <Form.Control
-                                    type={'title'}
-                                    placeholder=" "
-                                    value={newMessageTitle}
-                                    onChange={e => setNewMessageTitle(e.target.value)}
-                                />
-                            </FloatingLabel>
-                            <FloatingLabel controlId="messageText" label="Съобщение" className={'mt-3'}>
-                                <Form.Control
-                                    as="textarea"
-                                    placeholder=" "
-                                    style={{ height: '200px' }}
-                                    value={newMessageText}
-                                    onChange={e => setNewMessageText(e.target.value)}
-                                />
-                            </FloatingLabel>
-                            <Button variant="primary" type="submit" className={'mt-3'}>
-                                Изпрати
-                            </Button>
-                        </Form>
+                    <Col lg={4}>
+                        <Sticky stickyStyle={sidebarStickyStyle}>
+                            {class_ === undefined || classSubject === undefined ?
+                                <Loading error={!loadingClass || !loadingClassSubject}/>
+                                :
+                                <Card text={'white'} bg={'primary'} className={'border-0 rounded-mine shadow-lg-mine'}>
+                                    <Card.Body>
+                                        <Card.Text>
+                                            Клас - {class_name}
+                                            <br/>
+                                            Класен -
+                                            {
+                                                class_ && class_.class_teacher !== null ?
+                                                    <>{' '}{class_.class_teacher.first_name}{' '}{class_.class_teacher.last_name}</>
+                                                    :
+                                                    <>{' '}Няма</>
+                                            }
+                                        </Card.Text>
+                                        <hr/>
+                                        <Card.Text>
+                                            Предмет - {subject_name}
+                                            <br/>
+                                            Преподавател -
+                                            {
+                                                classSubject.teacher !== null ?
+                                                    <>{' '}{classSubject.teacher.first_name}{' '}{classSubject.teacher.last_name}</>
+                                                    :
+                                                    <>{' '}Няма</>
+                                            }
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            }
+                            <Form onSubmit={handleCreateMessage} className={'mt-4 p-2 border border-2 border-primary rounded-mine shadow-lg-mine'}>
+                                <FloatingLabel controlId="messageTitle" label="Заглавие">
+                                    <Form.Control
+                                        type={'title'}
+                                        placeholder=" "
+                                        value={newMessageTitle}
+                                        onChange={e => setNewMessageTitle(e.target.value)}
+                                    />
+                                </FloatingLabel>
+                                <FloatingLabel controlId="messageText" label="Съобщение" className={'mt-3'}>
+                                    <Form.Control
+                                        as="textarea"
+                                        placeholder=" "
+                                        style={{ height: '200px' }}
+                                        value={newMessageText}
+                                        onChange={e => setNewMessageText(e.target.value)}
+                                    />
+                                </FloatingLabel>
+                                <Button variant="primary" type="submit" className={'mt-3'}>
+                                    Изпрати
+                                </Button>
+                            </Form>
+                        </Sticky>
                     </Col>
 
                     <Col lg={8}>

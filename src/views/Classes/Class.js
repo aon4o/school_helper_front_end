@@ -11,6 +11,8 @@ import authContext from "../../utils/authContext";
 import handleFetchError from "../../utils/handleFetchError";
 import ClassCard from "../../components/ClassCard";
 import InfoAlert from "../../components/InfoAlert";
+import Sticky from 'react-sticky-el';
+import sidebarStickyStyle from '../../utils/sidebarStickyStyle';
 
 
 const Class = () => {
@@ -48,12 +50,13 @@ const Class = () => {
             <Container>
                 <Row>
                     <Col lg={4}>
-
-                        {class_ === undefined ?
-                            <Loading error={!loadingClass}/>
-                            :
-                            <ClassCard class_={class_}/>
-                        }
+                        <Sticky stickyStyle={sidebarStickyStyle}>
+                            {class_ === undefined ?
+                                <Loading error={!loadingClass}/>
+                                :
+                                <ClassCard class_={class_}/>
+                            }
+                        </Sticky>
                     </Col>
 
                     <Col lg={8}>
