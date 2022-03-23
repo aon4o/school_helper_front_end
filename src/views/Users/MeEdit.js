@@ -77,7 +77,7 @@ const MeEdit = () => {
                                     <Loading error={!loadingUser}/>
                                 </>
                                 :
-                                <Form onSubmit={handleSubmit} className="border border-3 border-primary rounded-3 p-3">
+                                <Form onSubmit={handleSubmit} className="border border-3 border-primary p-3 rounded-mine shadow-lg-mine">
                                     <FloatingLabel label="Име" className="mb-3">
                                         <Form.Control id="inputFirstName" className="border-primary"
                                                       type="text" placeholder="First Name"
