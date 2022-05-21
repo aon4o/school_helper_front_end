@@ -45,9 +45,6 @@ const NavBar = () => {
                                     <LinkContainer to="/discord" className={'ms-5'}>
                                         <Nav.Link>Discord Bot</Nav.Link>
                                     </LinkContainer>
-                                    <LinkContainer to="/instructions">
-                                        <Nav.Link>Инструкции</Nav.Link>
-                                    </LinkContainer>
                                 </>
                                 :
                                 <></>

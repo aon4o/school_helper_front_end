@@ -5,7 +5,6 @@ import authContext from "./utils/authContext";
 
 import Base from "./components/layout/Base";
 import Home from './views/Home';
-import Instructions from "./views/Instructions";
 import DiscordBot from "./views/DiscordBot";
 import NoPage from "./views/NoPage";
 
@@ -78,7 +77,6 @@ const App = () => {
                             <Route path=":email" element={<User />}/>
                         </Route>
                         <Route path="/discord" element={<DiscordBot />} />
-                        <Route path="/instructions" element={<Instructions />} />
                         <Route path="*" element={<NoPage />} />
                     </Route>
                 </Routes>
